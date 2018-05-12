@@ -1,26 +1,36 @@
-#OBJS specifies which files to compile as part of the project
-OBJS = src/01_hello_SDL.cpp
-
-#CC specifies which compiler we're using
+#Compiler and options
 CC = g++
+CFLAGS = -w -Wl,-subsystem,windows
 
-#INCLUDE_PATHS specifies the additional include paths we'll need
-INCLUDE_PATHS = -IC:\mingw_dev_lib\include\SDL2
+#Project Directories
+SRCDIR = src
+BINDIR = bin
+OBJDIR = bin/obj
 
-#LIBRARY_PATHS specifies the additional library paths we'll need
-LIBRARY_PATHS = -LC:\mingw_dev_lib\lib
+SDL2DIR = C:/mingw_dev_lib
 
-#COMPILER_FLAGS specifies the additional compilation options we're using
-# -w suppresses all warnings
-# -Wl,-subsystem,windows gets rid of the console window
-COMPILER_FLAGS = -w
+#List all cpp files
+SRC_FILES = $(wildcard $(SRCDIR)/*.cpp)
+#List corresponding obj files to be created.
+# patsubst  pattern,substitution,text
+OBJ_FILES = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SRC_FILES))
 
-#LINKER_FLAGS specifies the libraries we're linking against
-LINKER_FLAGS = -lmingw32 -lSDL2main -lSDL2
+#INCLPATH specifies the additional include paths we'll need
+INCLPATH = -I$(SDL2DIR)/include/SDL2
 
-#OBJ_NAME specifies the name of our exectuable
-OBJ_NAME = bin/01_hello_SDL
+#LIBPATH specifies the additional library paths we'll need
+LIBPATH = -L$(SDL2DIR)\lib
+LIBS = -lmingw32 -lSDL2main -lSDL2
 
-#This is the target that compiles our executable
-all : $(OBJS)
-	$(CC) $(OBJS) $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OBJ_NAME)
+### Quick help
+###		$@	Target
+###		$<	First prerequisite
+###		$^	All prerequisites
+
+#main exe from .o files
+renard.exe : $(OBJ_FILES)
+	$(CC) $(CFLAGS) -o $(BINDIR)/$@ $^ $(LIBPATH) $(LIBS)
+
+#.o files from .cpp files
+$(OBJDIR)/%.o : $(SRCDIR)/%.cpp
+	$(CC) $(CFLAGS) -c -o $@ $< $(INCLPATH)
