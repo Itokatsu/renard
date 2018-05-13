@@ -2,7 +2,7 @@
 
 # Compiler and options
 CXX = g++
-CXXFLAGS = -g -std=c++17 -Wall -Wextra -Wl,-subsystem,windows
+CXXFLAGS = -g -std=c++17 -Wall -Wextra
 # -g : enable debugging
 # -std=c++17 : C++17 support
 # -Wall : a lot of warnings flags.
@@ -13,6 +13,7 @@ CXXFLAGS = -g -std=c++17 -Wall -Wextra -Wl,-subsystem,windows
 SRCDIR = src
 BINDIR = bin
 OBJDIR = bin/obj
+HEADDIR = headers
 
 SDL2DIR = C:/mingw_dev_lib
 
@@ -23,11 +24,12 @@ SRC_FILES = $(wildcard $(SRCDIR)/*.cpp)
 OBJ_FILES = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SRC_FILES))
 
 #INCLPATH specifies the additional include paths
-INCLPATH = -I$(SDL2DIR)/include/SDL2
+INCLPATH =  -I$(HEADDIR) \
+			-I$(SDL2DIR)/include/SDL2
 
 #LIBPATH specifies the additional library paths
 LIBPATH = -L$(SDL2DIR)/lib
-LIBS = -lmingw32 -lSDL2main -lSDL2
+LIBS = -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
 
 
 ### Quick help
@@ -53,4 +55,4 @@ new:
 
 # remove object files
 clean :
-	rm -f $(OBJ_FILES)
+	rm -f $(OBJDIR)/*.o
