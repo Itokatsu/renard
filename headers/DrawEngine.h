@@ -4,12 +4,10 @@
 #include <string>
 #include <map>
 
-#include "GameEngine.h"
 #include "GraphicEngine.h"
 
 #include "SDL_image.h"
 #include "SDL_ttf.h"
-class GameEngine;
 
 class DrawEngine {
 

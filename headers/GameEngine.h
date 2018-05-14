@@ -8,7 +8,6 @@
 #include "TimerSDL.h"
 
 class IGameScreen;
-class DrawEngine;
 
 class GameEngine
 {

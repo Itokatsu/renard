@@ -10,7 +10,7 @@ bool GameEngine::Init(int height, int width)
 
 	// init graphic engine
 	gfx = new GraphicEngine();
-	if (!gfx->Init()) 
+	if (!gfx->Init(height, width)) 
 	{ 
 		success = false;
 	}
@@ -136,8 +136,11 @@ void GameEngine::Update()
 	// Top of the stack
 	unsigned int idx = screens.size()-1;
 	// Find highest screen in the stack not accepting screens running in the background
-	while ( screens.at(idx)->RunBG() && idx >= 0 ) {
-		idx--;
+	while ( screens.at(idx)->RunBG() ) {
+		if (idx == 0) {
+			break;
+		}
+			idx--;
 	}
 	// Update all screens till back at the top
 	while ( idx <= screens.size()-1) {
@@ -155,10 +158,14 @@ void GameEngine::Draw()
 	SDL_SetRenderDrawColor( gfx->GetRenderer(), 0x2A, 0x2A, 0x34, 0xFF );
 	SDL_RenderClear( gfx->GetRenderer() );
 
+	
 	unsigned int idx = screens.size()-1; // Top of the stack
 	// Find highest screen in the stack not accepting screens displaying in the background
-	while ( screens.at(idx)->DisplayBG() && idx >= 0 ) {
-		idx--;
+	while ( screens.at(idx)->DisplayBG() ) {
+		if (idx == 0) {
+			break;
+		}
+			idx--;
 	}
 	// Display all screens till back at the top
 	while ( idx <= screens.size()-1) {

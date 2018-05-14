@@ -10,7 +10,7 @@ GraphicEngine::GraphicEngine()
 	renderer = NULL;
 }
 
-bool GraphicEngine::Init()
+bool GraphicEngine::Init(int width, int height)
 {
 	bool success = true;
 	//Initialize SDL
@@ -28,7 +28,7 @@ bool GraphicEngine::Init()
 		}
 		//Create window
 		window = SDL_CreateWindow("Game of the year : Hobo Edition", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,	
-									SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+									width, height, SDL_WINDOW_SHOWN);
 		if (window == NULL)	
 		{
 			std::cerr << "Window could not be created! SDL_Error: " << SDL_GetError() << std::endl;

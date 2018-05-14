@@ -2,8 +2,6 @@
 #define DEF_GAMESCREEN
 
 #include "GameEngine.h"
-#include "SDL.h"
-
 /*Pure abstract class 
   i.e. TitleScreen LoadingScreen MenuScreen... */
 
@@ -11,7 +9,7 @@ class IGameScreen
 {
 	public:
 		//Creation of all the IGameScreen's assets
-		virtual void Init(GameEngine* game) = 0;
+		virtual void Init(GameEngine*) = 0;
 		//Deleting assets
 		virtual void Cleanup() = 0;
 
@@ -21,11 +19,11 @@ class IGameScreen
 		virtual void Unpause();
 
 		/*  Handles things like user inputs */
-		virtual void HandleEvents(GameEngine* game) = 0;
+		virtual void HandleEvents(GameEngine*) = 0;
 		/*  Goes to next frame */
-		virtual void Update(GameEngine* game, float dT) = 0;
+		virtual void Update(GameEngine*, float) = 0;
 		/* Draw the screen */
-		virtual	void Draw(GameEngine* game) = 0;
+		virtual	void Draw(GameEngine*) = 0;
 
 		bool IsPaused();
 		bool RunBG();

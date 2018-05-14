@@ -13,7 +13,7 @@ Screen_Test::Screen_Test()
 void Screen_Test::Init(GameEngine* game)
 {
 	// texture_title = game->GetDrawEngine()->CreateTexture("../media/img/logoa2balles.png");
-	SDL_Color textColor = { 0xBB, 0xBB, 0xBB };
+	SDL_Color textColor = { 0xBB, 0xBB, 0xBB, 0xFF };
 	texture_text = game->GetDrawEngine()->LoadText("TEST", textColor);
 	texture_png = game->GetDrawEngine()->LoadImage("media/img/kyo.png");
 	bg_music = game->GetSoundEngine()->loadMusic("media/sound/Wolf.mp3");
@@ -68,7 +68,7 @@ void Screen_Test::HandleEvents(GameEngine* game)
 	}
 }
 
-void Screen_Test::Update(GameEngine* game, float dT)
+void Screen_Test::Update(GameEngine*, float)
 {
 }
 

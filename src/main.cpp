@@ -8,7 +8,6 @@ const int SCREEN_HEIGHT = 480;
 
 int main( int argc, char* args[] )
 {
-
 	GameEngine game;
 	game.Init( SCREEN_WIDTH, SCREEN_HEIGHT );
 	while( game.IsRunning() ) {
@@ -19,5 +18,10 @@ int main( int argc, char* args[] )
 
 	game.Cleanup();
 
+
+	//warning fix
+	(void)argc; 
+	(void)args;
+	
 	return 0;
 }
