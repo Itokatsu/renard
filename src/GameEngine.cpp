@@ -4,7 +4,6 @@
 
 #include <iostream>
 
-
 bool GameEngine::Init(int height, int width)
 {
 	bool success = true;
@@ -21,6 +20,13 @@ bool GameEngine::Init(int height, int width)
 		if (!drawer->Init(gfx)) {
 			success = false;
 		}
+	}
+
+	// init sound engine
+	sound = new SoundEngine();
+	if(!sound->Init()) 
+	{
+		success = false;
 	}
 
 	// if init succeeded
@@ -182,4 +188,9 @@ GraphicEngine* GameEngine::GetGraphicEngine()
 DrawEngine* GameEngine::GetDrawEngine()
 {
 	return drawer;
+}
+
+SoundEngine* GameEngine::GetSoundEngine()
+{
+	return sound;
 }

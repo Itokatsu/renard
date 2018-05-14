@@ -25,6 +25,7 @@ class Screen_Test : public IGameScreen
 		static Screen_Test myTest;
 		SDL_Texture* texture_text;
 		SDL_Texture* texture_png;
+		Mix_Music* bg_music;
 
 };
 

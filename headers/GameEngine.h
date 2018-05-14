@@ -4,10 +4,12 @@
 #include <vector>
 #include "GraphicEngine.h"
 #include "DrawEngine.h"
+#include "SoundEngine.h"
 #include "TimerSDL.h"
 
 class IGameScreen;
 class DrawEngine;
+
 class GameEngine
 {
 	public:
@@ -31,6 +33,7 @@ class GameEngine
 		// Getters
 		GraphicEngine* GetGraphicEngine();
 		DrawEngine* GetDrawEngine();
+		SoundEngine* GetSoundEngine();
 
 	private:
 		// stack of Screens
@@ -43,6 +46,7 @@ class GameEngine
 		bool running;
 		GraphicEngine* gfx;
 		DrawEngine* drawer;
+		SoundEngine* sound;
 
 	// Timers and FPS counter
 	// Count ticks since the beginning
