@@ -1,103 +1,185 @@
 #include "GameEngine.h"
+#include "IGameScreen.h"
+#include "Screen_Test.h"
+
 #include <iostream>
 
-bool GameEngine::loadMedia() 
-{
-	 //Loading success flag 
-	 bool success = true;
 
- 	//Load splash image 
-	 helloWorld = SDL_LoadBMP( "media/img/hello_world.bmp" ); 
-	 if( helloWorld == NULL ) 
-	 { 
-		printf( "Unable to load image %s! SDL Error: %s\n", "media/img/hello_world.bmp", SDL_GetError() );
-	    success = false; 
+bool GameEngine::Init(int height, int width)
+{
+	bool success = true;
+
+	// init graphic engine
+	gfx = new GraphicEngine();
+	if (!gfx->Init()) 
+	{ 
+		success = false;
 	}
+	else {
+		//init draw engine
+		drawer = new DrawEngine();
+		if (!drawer->Init(gfx)) {
+			success = false;
+		}
+	}
+
+	// if init succeeded
+	if (success) {
+		// start intro
+		screens.push_back(Screen_Test::Instance());
+		// init intro
+		screens.back()->Init(this);
+
+		//start timers
+		framesThisSec = 0;
+		runTime.start();
+		updateTime.start();
+		FPSTimer.start();
+		running = true;
+	}
+
 	return success;
 }
 
-int GameEngine::Init(int width, int height)
+void GameEngine::Cleanup()
 {
-    //The window we'll be rendering to
-	window = NULL;
-	//The surface contained by the window
-	screenSurface = NULL;
-    
-    bool success = true;
-
-	//Initialize SDL
-	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
-	{
-		printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
-		success = false;
+	// clear the stack
+	while (!screens.empty()) {
+		screens.back()->Cleanup();
+		screens.pop_back();
 	}
-	else
-	{
-		//Create window
-		window = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN );
-		if( window == NULL )
-		{
-			printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
-			success = false;
-		}
-		else
-		{
-			//Get window surface
-			screenSurface = SDL_GetWindowSurface( window );
-		}
-	}
+	screens.clear();
+	// clean draw engine
+	drawer->Cleanup();
+	delete drawer;
+	drawer = NULL;
 
-    if( !loadMedia() )
-    {
-        printf( "Failed to load media" );
-        success = false;
-    }
-    running = true;
-    return success;
+	// clean graphic engine
+	gfx->Cleanup();
+	delete gfx;
+	gfx = NULL;
+
 }
 
-void GameEngine::Cleanup() 
+void GameEngine::ChangeScreen(IGameScreen* screen)
 {
-	SDL_FreeSurface( helloWorld );
-	helloWorld = NULL;
+	//quit current Screen
+	if (!screens.empty()) {
+		screens.back()->Cleanup();
+		screens.pop_back();
+	}
 
-	//Destroy window
-	SDL_DestroyWindow( window );
-	window = NULL;
-
-	//Quit SDL subsystems
-	SDL_Quit();
+	//add new screen
+	screens.push_back(screen);
+	screens.back()->Init(this);
 }
 
+void GameEngine::PushScreen(IGameScreen* screen)
+{
+	//pause current screen
+	if (!screen->RunBG()) {
+		screens.back()->Pause();
+	}
+
+	//start new top screen
+	screens.push_back(screen);
+	screens.back()->Init(this);
+}
+
+void GameEngine::PopScreen()
+{
+	//remove current screen
+	if (!screens.empty()) {
+		screens.back()->Cleanup();
+		screens.pop_back();
+	}
+
+	//resume previous screen
+	if (!screens.empty() && screens.back()->IsPaused()) {
+		screens.back()->Unpause();
+	}
+
+	//no screen > exit game
+	if (screens.empty()) {
+		this->Quit();
+	}
+}
+
+//let current screen handle events, update and draw
 void GameEngine::HandleEvents()
 {
-    SDL_Event e;
-    while( SDL_PollEvent( &e) != 0 )
-    {
-        if( e.type == SDL_QUIT ) 
-        {
-            Quit();
-        }
-    }
+	screens.back()->HandleEvents(this);
 }
 
 void GameEngine::Update()
 {
-    //Update the surface 
-    SDL_UpdateWindowSurface( window );
+	// get time since last update
+	Uint32 diff = updateTime.getTime(); //ms
+	updateTime.reset();
+
+	float dTime = diff*60 / 1000.f; // convert to 1/60ths of second
+
+	// Outputs FPS every second
+	if (FPSTimer.getTime() >= 1000) { //1sec passed
+		std::cout << "FPS : " << framesThisSec << std::endl;
+		// Reset counter
+		FPSTimer.reset();
+		framesThisSec = 0;
+	}
+
+	// Top of the stack
+	unsigned int idx = screens.size()-1;
+	// Find highest screen in the stack not accepting screens running in the background
+	while ( screens.at(idx)->RunBG() && idx >= 0 ) {
+		idx--;
+	}
+	// Update all screens till back at the top
+	while ( idx <= screens.size()-1) {
+		screens.at(idx)->Update(this, dTime);
+		idx++;
+	}
+
+	// Add one frame to FPS counter
+	framesThisSec++;
 }
 
 void GameEngine::Draw()
 {
-    SDL_BlitSurface( helloWorld, NULL, screenSurface, NULL );
+	//Clear the screen
+	SDL_SetRenderDrawColor( gfx->GetRenderer(), 0x2A, 0x2A, 0x34, 0xFF );
+	SDL_RenderClear( gfx->GetRenderer() );
+
+	unsigned int idx = screens.size()-1; // Top of the stack
+	// Find highest screen in the stack not accepting screens displaying in the background
+	while ( screens.at(idx)->DisplayBG() && idx >= 0 ) {
+		idx--;
+	}
+	// Display all screens till back at the top
+	while ( idx <= screens.size()-1) {
+		screens.at(idx)->Draw(this);
+		idx++;
+	}
+
+	// Update the display
+	SDL_RenderPresent( gfx->GetRenderer() );
 }
 
-void GameEngine::GameEngine::Quit()
+void GameEngine::Quit()
 {
-    running = false;
+	running = false; // Will quit the main loop
 }
 
 bool GameEngine::IsRunning()
 {
-    return running;
+	return running;
+}
+
+GraphicEngine* GameEngine::GetGraphicEngine()
+{
+	return gfx;
+}
+
+DrawEngine* GameEngine::GetDrawEngine()
+{
+	return drawer;
 }

@@ -14,6 +14,7 @@ SRCDIR = src
 BINDIR = bin
 OBJDIR = bin/obj
 HEADDIR = headers
+TARGET = renard.exe
 
 SDL2DIR = C:/mingw_dev_lib
 
@@ -29,8 +30,7 @@ INCLPATH =  -I$(HEADDIR) \
 
 #LIBPATH specifies the additional library paths
 LIBPATH = -L$(SDL2DIR)/lib
-LIBS = -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
-
+LIBS = -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf
 
 ### Quick help
 ###		$@	Target
@@ -38,7 +38,7 @@ LIBS = -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
 ###		$^	All prerequisites
 
 #main exe from .o files
-renard.exe : $(OBJ_FILES)
+$(TARGET) : $(OBJ_FILES)
 	$(CXX) $(CXXFLAGS) -o $(BINDIR)/$@ $^ $(LIBPATH) $(LIBS)
 
 #.o files from .cpp files
@@ -46,13 +46,8 @@ $(OBJDIR)/%.o : $(SRCDIR)/%.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $< $(INCLPATH)
 ## -c : compile/assemble but do not link.
 
-.PHONY: new
 .PHONY: clean
-
-# create directories
-new:
-	mkdir -p $(BINDIR) $(OBJDIR)
 
 # remove object files
 clean :
-	rm -f $(OBJDIR)/*.o
+	rm -f $(OBJDIR)/*.o $(BINDIR)/$(TARGET)
