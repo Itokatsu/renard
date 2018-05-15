@@ -28,13 +28,13 @@ INCLPATH =  -I$(HEADDIR) \
 			-I$(LIBDIR)/SDL2-2.0.8/include/SDL2 \
 			-I$(LIBDIR)/SDL2_image-2.0.3/include/SDL2 \
 			-I$(LIBDIR)/SDL2_ttf-2.0.14/include/SDL2 \
-			-I$(LIBDIR)/SDL2_mixer-2.0.2/include/SDL2 \
+			-I$(LIBDIR)/SDL2_mixer-2.0.2/include/SDL2
 
 # LIBPATH specifies the additional library paths
 LIBPATH = 	-L$(LIBDIR)/SDL2-2.0.8/lib \
 			-L$(LIBDIR)/SDL2_image-2.0.3/lib \
 			-L$(LIBDIR)/SDL2_ttf-2.0.14/lib \
-			-L$(LIBDIR)/SDL2_mixer-2.0.2/lib \
+			-L$(LIBDIR)/SDL2_mixer-2.0.2/lib
 
 LIBS = -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 
