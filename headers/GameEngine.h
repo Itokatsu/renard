@@ -34,6 +34,9 @@ class GameEngine
 		DrawEngine* GetDrawEngine();
 		SoundEngine* GetSoundEngine();
 
+		int GetWindowWidth();
+		int GetWindowHeight();
+
 	private:
 		// stack of Screens
 		std::vector<IGameScreen*> screens;
@@ -41,6 +44,9 @@ class GameEngine
 		std::vector<IGameScreen*> screenDisplay;
 		// Screens to update
 		std::vector<IGameScreen*> screenRun;
+
+		int windowWidth;
+		int windowHeight;
 
 		bool running;
 		GraphicEngine* gfx;

@@ -1,13 +1,13 @@
 #include "GameEngine.h"
 #include "IGameScreen.h"
-#include "Screen_Test.h"
+#include "Screen_Sprite.h"
 
 #include <iostream>
 
 bool GameEngine::Init(int height, int width)
 {
 	bool success = true;
-
+	
 	// init graphic engine
 	gfx = new GraphicEngine();
 	if (!gfx->Init(height, width)) 
@@ -15,6 +15,8 @@ bool GameEngine::Init(int height, int width)
 		success = false;
 	}
 	else {
+		windowHeight = height;
+		windowWidth = width;
 		//init draw engine
 		drawer = new DrawEngine();
 		if (!drawer->Init(gfx)) {
@@ -32,7 +34,7 @@ bool GameEngine::Init(int height, int width)
 	// if init succeeded
 	if (success) {
 		// start intro
-		screens.push_back(Screen_Test::Instance());
+		screens.push_back(Screen_Sprite::Instance());
 		// init intro
 		screens.back()->Init(this);
 
@@ -185,6 +187,14 @@ void GameEngine::Quit()
 bool GameEngine::IsRunning()
 {
 	return running;
+}
+
+int GameEngine::GetWindowHeight() {
+	return windowHeight;
+}
+
+int GameEngine::GetWindowWidth() {
+	return windowWidth;
 }
 
 GraphicEngine* GameEngine::GetGraphicEngine()
