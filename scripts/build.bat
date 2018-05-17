@@ -1,3 +1,4 @@
+@echo off
 :: directories
 set binDIR=%~dp0..\bin
 set objDIR=%~dp0..\bin\obj
