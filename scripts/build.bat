@@ -7,7 +7,7 @@ set libDIR=%~dp0..\lib
 if not exist %binDIR% mkdir %binDIR%
 if not exist %objDIR% mkdir %objDIR%
 
-cd %~dp0
+cd %~dp0..
 make
 
 cd %binDIR%

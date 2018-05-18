@@ -2,18 +2,11 @@
 #define DEF_SCREEN_TEST
 
 #include "IGameScreen.h"
-
+#include "Sprite.h"
 class Screen_Sprite : public IGameScreen
 {
 
   public:
-	enum direction
-	{
-		BAS,
-		GAUCHE,
-		DROITE,
-		HAUT
-	};
 	void Init(GameEngine *game);
 	void Cleanup();
 
@@ -32,17 +25,12 @@ class Screen_Sprite : public IGameScreen
   private:
 	static Screen_Sprite myScreen;
 	SDL_Texture *texture_png;
-
-	int sprite_height;
-	int sprite_width;
-	double sprite_xspeed;
-	double sprite_yspeed;
+	Sprite *mySprite;
 	int sprite_x;
 	int sprite_y;
-	direction sprite_direction;
-	float anim_time;
-	int sprite_currentImg;
-	int sprite_maxImg;
+
+	float sprite_xspeed;
+	float sprite_yspeed;
 };
 
 #endif

@@ -10,12 +10,12 @@ CXXFLAGS = -g -std=c++17 -Wall -Wextra
 # -Wl,-subsystem : no console window.
 
 # Project Directories
-SRCDIR = ../src
-BINDIR = ../bin
-OBJDIR = ../bin/obj
-HEADDIR = ../headers
+SRCDIR = src
+BINDIR = bin
+OBJDIR = bin/obj
+HEADDIR = headers
 TARGET = renard.exe
-LIBDIR = ../lib
+LIBDIR = lib
 
 # List all cpp files
 SRC_FILES = $(wildcard $(SRCDIR)/*.cpp)
