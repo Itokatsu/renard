@@ -4,13 +4,13 @@
 
 #include <iostream>
 
-bool GameEngine::Init(int height, int width)
+bool GameEngine::Init(int width, int height)
 {
 	bool success = true;
 	
 	// init graphic engine
 	gfx = new GraphicEngine();
-	if (!gfx->Init(height, width)) 
+	if (!gfx->Init(width, height)) 
 	{ 
 		success = false;
 	}
@@ -126,7 +126,7 @@ void GameEngine::Update()
 	updateTime.reset();
 
 	float dTime = diff*60 / 1000.f; // convert to 1/60ths of second
-
+	dTime = diff;
 	// Outputs FPS every second
 	if (FPSTimer.getTime() >= 1000) { //1sec passed
 		std::cout << "FPS : " << framesThisSec << std::endl;

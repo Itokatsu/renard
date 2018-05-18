@@ -16,7 +16,11 @@ int main( int argc, char* args[] )
 	for ( int i = 0; i < argc; i++ ) {
 		arguments.push_back(args[i]);
 	}
-	
+
+	//arguments processing
+	//TO DO
+	arguments.clear();
+
 	GameEngine game;
 	game.Init( SCREEN_WIDTH, SCREEN_HEIGHT );
 	while( game.IsRunning() ) {
