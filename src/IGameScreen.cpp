@@ -3,19 +3,21 @@
 
 void IGameScreen::Pause()
 {
-	if (!paused) {
+	if (!paused)
+	{
 		paused = true;
 	}
 }
 
 void IGameScreen::Unpause()
 {
-	if (paused) {
+	if (paused)
+	{
 		paused = false;
 	}
 }
 
-bool IGameScreen::IsPaused() 
+bool IGameScreen::IsPaused()
 {
 	return paused;
 }

@@ -7,32 +7,35 @@
 bool GameEngine::Init(int width, int height)
 {
 	bool success = true;
-	
+
 	// init graphic engine
 	gfx = new GraphicEngine();
-	if (!gfx->Init(width, height)) 
-	{ 
+	if (!gfx->Init(width, height))
+	{
 		success = false;
 	}
-	else {
+	else
+	{
 		windowHeight = height;
 		windowWidth = width;
 		//init draw engine
 		drawer = new DrawEngine();
-		if (!drawer->Init(gfx)) {
+		if (!drawer->Init(gfx))
+		{
 			success = false;
 		}
 	}
 
 	// init sound engine
 	sound = new SoundEngine();
-	if(!sound->Init()) 
+	if (!sound->Init())
 	{
 		success = false;
 	}
 
 	// if init succeeded
-	if (success) {
+	if (success)
+	{
 		// start intro
 		screens.push_back(Screen_Sprite::Instance());
 		// init intro
@@ -52,7 +55,8 @@ bool GameEngine::Init(int width, int height)
 void GameEngine::Cleanup()
 {
 	// clear the stack
-	while (!screens.empty()) {
+	while (!screens.empty())
+	{
 		screens.back()->Cleanup();
 		screens.pop_back();
 	}
@@ -66,13 +70,13 @@ void GameEngine::Cleanup()
 	gfx->Cleanup();
 	delete gfx;
 	gfx = NULL;
-
 }
 
-void GameEngine::ChangeScreen(IGameScreen* screen)
+void GameEngine::ChangeScreen(IGameScreen *screen)
 {
 	//quit current Screen
-	if (!screens.empty()) {
+	if (!screens.empty())
+	{
 		screens.back()->Cleanup();
 		screens.pop_back();
 	}
@@ -82,10 +86,11 @@ void GameEngine::ChangeScreen(IGameScreen* screen)
 	screens.back()->Init(this);
 }
 
-void GameEngine::PushScreen(IGameScreen* screen)
+void GameEngine::PushScreen(IGameScreen *screen)
 {
 	//pause current screen
-	if (!screen->RunBG()) {
+	if (!screen->RunBG())
+	{
 		screens.back()->Pause();
 	}
 
@@ -97,18 +102,21 @@ void GameEngine::PushScreen(IGameScreen* screen)
 void GameEngine::PopScreen()
 {
 	//remove current screen
-	if (!screens.empty()) {
+	if (!screens.empty())
+	{
 		screens.back()->Cleanup();
 		screens.pop_back();
 	}
 
 	//resume previous screen
-	if (!screens.empty() && screens.back()->IsPaused()) {
+	if (!screens.empty() && screens.back()->IsPaused())
+	{
 		screens.back()->Unpause();
 	}
 
 	//no screen > exit game
-	if (screens.empty()) {
+	if (screens.empty())
+	{
 		this->Quit();
 	}
 }
@@ -125,10 +133,11 @@ void GameEngine::Update()
 	Uint32 diff = updateTime.getTime(); //ms
 	updateTime.reset();
 
-	float dTime = diff*60 / 1000.f; // convert to 1/60ths of second
+	float dTime = diff * 60 / 1000.f; // convert to 1/60ths of second
 	dTime = diff;
 	// Outputs FPS every second
-	if (FPSTimer.getTime() >= 1000) { //1sec passed
+	if (FPSTimer.getTime() >= 1000)
+	{ //1sec passed
 		std::cout << "FPS : " << framesThisSec << std::endl;
 		// Reset counter
 		FPSTimer.reset();
@@ -136,16 +145,19 @@ void GameEngine::Update()
 	}
 
 	// Top of the stack
-	unsigned int idx = screens.size()-1;
+	unsigned int idx = screens.size() - 1;
 	// Find highest screen in the stack not accepting screens running in the background
-	while ( screens.at(idx)->RunBG() ) {
-		if (idx == 0) {
+	while (screens.at(idx)->RunBG())
+	{
+		if (idx == 0)
+		{
 			break;
 		}
-			idx--;
+		idx--;
 	}
 	// Update all screens till back at the top
-	while ( idx <= screens.size()-1) {
+	while (idx <= screens.size() - 1)
+	{
 		screens.at(idx)->Update(this, dTime);
 		idx++;
 	}
@@ -157,26 +169,28 @@ void GameEngine::Update()
 void GameEngine::Draw()
 {
 	//Clear the screen
-	SDL_SetRenderDrawColor( gfx->GetRenderer(), 0x2A, 0x2A, 0x34, 0xFF );
-	SDL_RenderClear( gfx->GetRenderer() );
+	SDL_SetRenderDrawColor(gfx->GetRenderer(), 0x2A, 0x2A, 0x34, 0xFF);
+	SDL_RenderClear(gfx->GetRenderer());
 
-	
-	unsigned int idx = screens.size()-1; // Top of the stack
+	unsigned int idx = screens.size() - 1; // Top of the stack
 	// Find highest screen in the stack not accepting screens displaying in the background
-	while ( screens.at(idx)->DisplayBG() ) {
-		if (idx == 0) {
+	while (screens.at(idx)->DisplayBG())
+	{
+		if (idx == 0)
+		{
 			break;
 		}
-			idx--;
+		idx--;
 	}
 	// Display all screens till back at the top
-	while ( idx <= screens.size()-1) {
+	while (idx <= screens.size() - 1)
+	{
 		screens.at(idx)->Draw(this);
 		idx++;
 	}
 
 	// Update the display
-	SDL_RenderPresent( gfx->GetRenderer() );
+	SDL_RenderPresent(gfx->GetRenderer());
 }
 
 void GameEngine::Quit()
@@ -189,25 +203,27 @@ bool GameEngine::IsRunning()
 	return running;
 }
 
-int GameEngine::GetWindowHeight() {
+int GameEngine::GetWindowHeight()
+{
 	return windowHeight;
 }
 
-int GameEngine::GetWindowWidth() {
+int GameEngine::GetWindowWidth()
+{
 	return windowWidth;
 }
 
-GraphicEngine* GameEngine::GetGraphicEngine()
+GraphicEngine *GameEngine::GetGraphicEngine()
 {
 	return gfx;
 }
 
-DrawEngine* GameEngine::GetDrawEngine()
+DrawEngine *GameEngine::GetDrawEngine()
 {
 	return drawer;
 }
 
-SoundEngine* GameEngine::GetSoundEngine()
+SoundEngine *GameEngine::GetSoundEngine()
 {
 	return sound;
 }

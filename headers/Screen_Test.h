@@ -5,28 +5,27 @@
 
 class Screen_Test : public IGameScreen
 {
-	public:
-		void Init(GameEngine* game);
-		void Cleanup();
+  public:
+	void Init(GameEngine *game);
+	void Cleanup();
 
-		void Pause();
-		void Unpause();
+	void Pause();
+	void Unpause();
 
-		void HandleEvents(GameEngine* game);
-		void Update(GameEngine* game, float dT);
-		void Draw(GameEngine* game);
+	void HandleEvents(GameEngine *game);
+	void Update(GameEngine *game, float dT);
+	void Draw(GameEngine *game);
 
-		static Screen_Test* Instance();
+	static Screen_Test *Instance();
 
-	protected:
-		Screen_Test();
+  protected:
+	Screen_Test();
 
-	private:
-		static Screen_Test myTest;
-		SDL_Texture* texture_text;
-		SDL_Texture* texture_png;
-		Mix_Music* bg_music;
-
+  private:
+	static Screen_Test myTest;
+	SDL_Texture *texture_text;
+	SDL_Texture *texture_png;
+	Mix_Music *bg_music;
 };
 
 #endif

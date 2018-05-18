@@ -8,19 +8,20 @@
 #include "SDL_mixer.h"
 class GameEngine;
 
-class SoundEngine {
+class SoundEngine
+{
 
-	public:
-		SoundEngine();
-		bool Init();
-		void Cleanup();
+  public:
+	SoundEngine();
+	bool Init();
+	void Cleanup();
 
-        Mix_Music* loadMusic(std::string path);
-        Mix_Chunk* loadChunk(std::string path);
+	Mix_Music *loadMusic(std::string path);
+	Mix_Chunk *loadChunk(std::string path);
 
-	private:
-		std::vector<Mix_Chunk*> ressources_chunks;
-        std::vector<Mix_Music*> ressources_musics;
+  private:
+	std::vector<Mix_Chunk *> ressources_chunks;
+	std::vector<Mix_Music *> ressources_musics;
 };
 
 #endif

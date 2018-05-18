@@ -5,43 +5,44 @@
 
 class Screen_Sprite : public IGameScreen
 {
-    
-	public:
-        enum direction {
-            BAS,
-            GAUCHE,
-            DROITE,
-            HAUT
-        };
-		void Init(GameEngine* game);
-		void Cleanup();
 
-		void Pause();
-		void Unpause();
+  public:
+	enum direction
+	{
+		BAS,
+		GAUCHE,
+		DROITE,
+		HAUT
+	};
+	void Init(GameEngine *game);
+	void Cleanup();
 
-		void HandleEvents(GameEngine* game);
-		void Update(GameEngine* game, float dT);
-		void Draw(GameEngine* game);
+	void Pause();
+	void Unpause();
 
-		static Screen_Sprite* Instance();
+	void HandleEvents(GameEngine *game);
+	void Update(GameEngine *game, float dT);
+	void Draw(GameEngine *game);
 
-	protected:
-		Screen_Sprite();
+	static Screen_Sprite *Instance();
 
-	private:
-		static Screen_Sprite myScreen;
-		SDL_Texture* texture_png;
+  protected:
+	Screen_Sprite();
 
-        int sprite_height;
-        int sprite_width;
-		double sprite_xspeed;
-		double sprite_yspeed;
-        int sprite_x;
-        int sprite_y;
-        direction sprite_direction;
-		float anim_time;
-        int sprite_currentImg;
-        int sprite_maxImg;
+  private:
+	static Screen_Sprite myScreen;
+	SDL_Texture *texture_png;
+
+	int sprite_height;
+	int sprite_width;
+	double sprite_xspeed;
+	double sprite_yspeed;
+	int sprite_x;
+	int sprite_y;
+	direction sprite_direction;
+	float anim_time;
+	int sprite_currentImg;
+	int sprite_maxImg;
 };
 
 #endif

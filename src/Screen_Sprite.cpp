@@ -50,7 +50,7 @@ void Screen_Sprite::HandleEvents(GameEngine *game)
 		else
 		{
 			// Key press
-			if (e.type == SDL_KEYDOWN)
+			if (e.type == SDL_KEYDOWN && e.key.repeat == 0)
 			{
 				// ESCAPE is pressed
 				if (e.key.keysym.sym == SDLK_ESCAPE)
@@ -62,34 +62,42 @@ void Screen_Sprite::HandleEvents(GameEngine *game)
 				if (e.key.keysym.sym == SDLK_UP)
 				{
 					sprite_direction = direction::HAUT;
-					sprite_yspeed = -1;
+					sprite_yspeed -= 1;
 				}
 				if (e.key.keysym.sym == SDLK_DOWN)
 				{
 					sprite_direction = direction::BAS;
-					sprite_yspeed = 1;
+					sprite_yspeed += 1;
 				}
 				if (e.key.keysym.sym == SDLK_RIGHT)
 				{
 					sprite_direction = direction::DROITE;
-					sprite_xspeed = 1;
+					sprite_xspeed += 1;
 				}
 				if (e.key.keysym.sym == SDLK_LEFT)
 				{
 					sprite_direction = direction::GAUCHE;
-					sprite_xspeed = -1;
+					sprite_xspeed -= 1;
 				}
 			}
 			else if (e.type == SDL_KEYUP)
 			{
 				// Directions
-				if (e.key.keysym.sym == SDLK_UP || e.key.keysym.sym == SDLK_DOWN)
+				if (e.key.keysym.sym == SDLK_UP)
 				{
-					sprite_yspeed = 0;
+					sprite_yspeed += 1;
 				}
-				if (e.key.keysym.sym == SDLK_RIGHT || e.key.keysym.sym == SDLK_LEFT)
+				if (e.key.keysym.sym == SDLK_DOWN)
 				{
-					sprite_xspeed = 0;
+					sprite_yspeed -= 1;
+				}
+				if (e.key.keysym.sym == SDLK_RIGHT)
+				{
+					sprite_xspeed -= 1;
+				}
+				if (e.key.keysym.sym == SDLK_LEFT)
+				{
+					sprite_xspeed += 1;
 				}
 			}
 		}

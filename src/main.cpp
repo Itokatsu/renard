@@ -9,11 +9,12 @@
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
-int main( int argc, char* args[] )
+int main(int argc, char *args[])
 {
 	//parse arguments
 	std::vector<std::string> arguments;
-	for ( int i = 0; i < argc; i++ ) {
+	for (int i = 0; i < argc; i++)
+	{
 		arguments.push_back(args[i]);
 	}
 
@@ -22,8 +23,9 @@ int main( int argc, char* args[] )
 	arguments.clear();
 
 	GameEngine game;
-	game.Init( SCREEN_WIDTH, SCREEN_HEIGHT );
-	while( game.IsRunning() ) {
+	game.Init(SCREEN_WIDTH, SCREEN_HEIGHT);
+	while (game.IsRunning())
+	{
 		game.Draw();
 		game.HandleEvents();
 		game.Update();
