@@ -1,5 +1,5 @@
-#ifndef DEF_Screen_Sprite
-#define DEF_SCREEN_TEST
+#ifndef DEF_SCREEN_SPRITE
+#define DEF_SCREEN_SPRITE
 
 #include "IGameScreen.h"
 #include "Sprite.h"
