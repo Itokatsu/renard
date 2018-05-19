@@ -26,6 +26,7 @@ class Player
 	Sprite *mySprite_;
 	SDL_Point position_;
 	Vec2f velocity_;
+	float maxSpeed_;
 };
 
 #endif

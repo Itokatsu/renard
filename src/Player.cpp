@@ -1,4 +1,5 @@
 #include "Player.h"
+#include <iostream>
 
 Player::Player(GameEngine *game)
 {
@@ -6,6 +7,7 @@ Player::Player(GameEngine *game)
 	mySprite_ = new Sprite(tex, 96 / 3, 128 / 4, 3, 100);
 	position_ = {100, 100};
 	velocity_ = {.0f, .0f};
+	maxSpeed_ = 0.5;
 }
 
 void Player::Draw(GameEngine *game)
@@ -24,12 +26,21 @@ void Player::Update(GameEngine *game, float dt)
 	{
 		mySprite_->PlayAnim(dt);
 	}
-	
-	Vec2f normalizedVel = velocity_;
+
+	/*Vec2f normalizedVel = velocity_;
 	normalizedVel.Normalize();
 
 	position_.x += (normalizedVel.x * dt * 0.5f);
-	position_.y += (normalizedVel.y * dt * 0.5f);
+	position_.y += (normalizedVel.y * dt * 0.5f);*/
+
+	Vec2f cappedVel = velocity_;
+	if (velocity_.Length() > maxSpeed_)
+	{
+		cappedVel.Truncate(maxSpeed_);
+	}
+
+	position_.x += (cappedVel.x * dt);
+	position_.y += (cappedVel.y * dt);
 
 	position_.x = std::max(position_.x, 0);
 	position_.y = std::max(position_.y, 0);

@@ -10,7 +10,7 @@ Sprite::Sprite(SDL_Texture *tex, int width, int height,
 	animSpeed_ = speed;
 	animated_ = (maxImg > 1 && speed > 0.0);
 
-	direction_ = Direction::BAS;
+	direction_ = BAS;
 	animTime_ = 0;
 	currentFrame_ = 0;
 }
