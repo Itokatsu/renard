@@ -9,13 +9,12 @@
 class Player
 {
   public:
+	Player(GameEngine *game);
 
-	Player(GameEngine* game);
+	void Draw(GameEngine *game);
+	void Update(GameEngine *game, float dt);
 
-	void Draw(GameEngine* game);
-	void Update(GameEngine* game, float dt);
-
-	Sprite* GetSprite();
+	Sprite *GetSprite();
 	SDL_Point GetPosition();
 	vec2f GetVelocity();
 	void SetVelocity(vec2f v);
@@ -24,8 +23,7 @@ class Player
 	SDL_Rect GetRect();
 
   private:
-	Sprite* mySprite;
-
+	Sprite *mySprite;
 	SDL_Point position;
 	vec2f velocity;
 };

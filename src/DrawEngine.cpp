@@ -3,6 +3,7 @@
 
 DrawEngine::DrawEngine() {}
 
+// Initialize SDL_Image and SDL_TTF
 bool DrawEngine::Init(GraphicEngine *gfx)
 {
 	bool success = true;
@@ -34,11 +35,14 @@ bool DrawEngine::Init(GraphicEngine *gfx)
 
 void DrawEngine::Cleanup()
 {
-	// clean map
+	// clean ressources map
 	for (auto &pair : ressources)
 	{
-		SDL_Texture* texture = pair.second;
-		SDL_DestroyTexture(texture);
+		SDL_Texture *texture = pair.second;
+		if (texture != NULL)
+		{
+			SDL_DestroyTexture(texture);
+		}
 		texture = NULL;
 	}
 	ressources.clear();
@@ -50,8 +54,19 @@ void DrawEngine::Cleanup()
 	IMG_Quit();
 }
 
+// Imgfile -> Texture
 SDL_Texture *DrawEngine::LoadImage(std::string imgPath)
 {
+	// Look for texture in ressources map.
+	int const pos = imgPath.find_last_of('/');
+	const std::string leaf = imgPath.substr(pos + 1);
+	if (GetRessource(leaf) != NULL)
+	{
+		// Returns it directly when found
+		return ressources.at(leaf);
+	}
+
+	// Load with SDL_Image
 	SDL_Texture *newTexture = NULL;
 	SDL_Surface *tempSurface = IMG_Load(imgPath.c_str());
 	if (tempSurface == NULL)
@@ -69,13 +84,11 @@ SDL_Texture *DrawEngine::LoadImage(std::string imgPath)
 	}
 
 	// Push into ressources map.
-	int const pos = imgPath.find_last_of('/');
-	const std::string leaf = imgPath.substr(pos + 1);
 	ressources[leaf] = newTexture;
-
 	return newTexture;
 }
 
+// Create a texture with your text.
 SDL_Texture *DrawEngine::LoadText(std::string text, SDL_Color color)
 {
 	SDL_Texture *newTexture = NULL;
@@ -98,11 +111,12 @@ SDL_Texture *DrawEngine::LoadText(std::string text, SDL_Color color)
 	return newTexture;
 }
 
+// Look into ressources map
 SDL_Texture *DrawEngine::GetRessource(std::string key)
 {
 	int c = ressources.count(key);
-	if (c == 0) return 
-		NULL;
+	if (c == 0)
+		return NULL;
 	return ressources.at(key);
 }
 

@@ -38,7 +38,7 @@ bool GraphicEngine::Init(int width, int height)
 		{
 			initialized = true;
 			// for surface usage
-			/*screenSurface = SDL_GetWindowSurface(window);*/
+			// screenSurface = SDL_GetWindowSurface(window);
 
 			// creating renderer (texture usage)
 			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
