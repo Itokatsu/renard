@@ -21,9 +21,9 @@ class DrawEngine
 	SDL_Texture *GetRessource(std::string key);
 
   private:
-	std::map<std::string, SDL_Texture *> ressources;
-	SDL_Renderer *renderer;
-	TTF_Font *font;
+	std::map<std::string, SDL_Texture *> ressources_;
+	SDL_Renderer *renderer_;
+	TTF_Font *font_;
 };
 
 #endif

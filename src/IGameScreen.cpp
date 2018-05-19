@@ -3,31 +3,31 @@
 
 void IGameScreen::Pause()
 {
-	if (!paused)
+	if (!paused_)
 	{
-		paused = true;
+		paused_ = true;
 	}
 }
 
 void IGameScreen::Unpause()
 {
-	if (paused)
+	if (paused_)
 	{
-		paused = false;
+		paused_ = false;
 	}
 }
 
 bool IGameScreen::IsPaused()
 {
-	return paused;
+	return paused_;
 }
 
 bool IGameScreen::RunBG()
 {
-	return allowRunningBG;
+	return allowRunningBG_;
 }
 
 bool IGameScreen::DisplayBG()
 {
-	return displayBG;
+	return displayBG_;
 }

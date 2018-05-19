@@ -7,7 +7,7 @@ DrawEngine::DrawEngine() {}
 bool DrawEngine::Init(GraphicEngine *gfx)
 {
 	bool success = true;
-	renderer = gfx->GetRenderer();
+	renderer_ = gfx->GetRenderer();
 
 	// init SDL_image
 	int imgFlags = IMG_INIT_PNG; //Loading PNGs
@@ -23,8 +23,8 @@ bool DrawEngine::Init(GraphicEngine *gfx)
 		std::cerr << "SDL_ttf init FAILED : " << TTF_GetError() << std::endl;
 		success = false;
 	}
-	font = TTF_OpenFont("media/fonts/Roboto-Medium.ttf", 28);
-	if (font == NULL)
+	font_ = TTF_OpenFont("media/fonts/Roboto-Medium.ttf", 28);
+	if (font_ == NULL)
 	{
 		std::cerr << "Failed to open font : " << TTF_GetError() << std::endl;
 		success = false;
@@ -36,7 +36,7 @@ bool DrawEngine::Init(GraphicEngine *gfx)
 void DrawEngine::Cleanup()
 {
 	// clean ressources map
-	for (auto &pair : ressources)
+	for (auto &pair : ressources_)
 	{
 		SDL_Texture *texture = pair.second;
 		if (texture != NULL)
@@ -45,10 +45,10 @@ void DrawEngine::Cleanup()
 		}
 		texture = NULL;
 	}
-	ressources.clear();
+	ressources_.clear();
 
-	TTF_CloseFont(font);
-	font = NULL;
+	TTF_CloseFont(font_);
+	font_ = NULL;
 
 	TTF_Quit();
 	IMG_Quit();
@@ -63,7 +63,7 @@ SDL_Texture *DrawEngine::LoadImage(std::string imgPath)
 	if (GetRessource(leaf) != NULL)
 	{
 		// Returns it directly when found
-		return ressources.at(leaf);
+		return ressources_.at(leaf);
 	}
 
 	// Load with SDL_Image
@@ -75,7 +75,7 @@ SDL_Texture *DrawEngine::LoadImage(std::string imgPath)
 	}
 	else
 	{
-		newTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+		newTexture = SDL_CreateTextureFromSurface(renderer_, tempSurface);
 		if (newTexture == NULL)
 		{
 			std::cerr << "Failed to create texture from " << imgPath << " : " << SDL_GetError() << std::endl;
@@ -84,7 +84,7 @@ SDL_Texture *DrawEngine::LoadImage(std::string imgPath)
 	}
 
 	// Push into ressources map.
-	ressources[leaf] = newTexture;
+	ressources_[leaf] = newTexture;
 	return newTexture;
 }
 
@@ -92,14 +92,14 @@ SDL_Texture *DrawEngine::LoadImage(std::string imgPath)
 SDL_Texture *DrawEngine::LoadText(std::string text, SDL_Color color)
 {
 	SDL_Texture *newTexture = NULL;
-	SDL_Surface *tempSurface = TTF_RenderUTF8_Solid(font, text.c_str(), color);
+	SDL_Surface *tempSurface = TTF_RenderUTF8_Solid(font_, text.c_str(), color);
 	if (tempSurface == NULL)
 	{
 		std::cerr << "Failed to render text surface : " << TTF_GetError() << std::endl;
 	}
 	else
 	{
-		newTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+		newTexture = SDL_CreateTextureFromSurface(renderer_, tempSurface);
 		if (newTexture == NULL)
 		{
 			std::cerr << "Failed to create texture from rendered text : " << SDL_GetError() << std::endl;
@@ -114,10 +114,10 @@ SDL_Texture *DrawEngine::LoadText(std::string text, SDL_Color color)
 // Look into ressources map
 SDL_Texture *DrawEngine::GetRessource(std::string key)
 {
-	int c = ressources.count(key);
+	int c = ressources_.count(key);
 	if (c == 0)
 		return NULL;
-	return ressources.at(key);
+	return ressources_.at(key);
 }
 
 // 	void Load(std::string className, std::string file);

@@ -28,17 +28,17 @@ class Sprite
 	void SetDirection(Direction d);
 
   private:
-	SDL_Texture *texture;
-	bool animated;
-	int frameWidth;
-	int frameHeight;
+	SDL_Texture *texture_;
+	bool animated_;
+	int frameWidth_;
+	int frameHeight_;
 	//Number of animation frames
-	unsigned int numFrames;
-	Direction direction;
-	float animSpeed;
+	unsigned int numFrames_;
+	Direction direction_;
+	float animSpeed_;
 
-	int currentFrame;
-	int animTime;
+	int currentFrame_;
+	int animTime_;
 };
 
 #endif

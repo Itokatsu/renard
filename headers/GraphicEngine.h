@@ -12,10 +12,10 @@ class GraphicEngine
 	SDL_Renderer *GetRenderer();
 
   private:
-	SDL_Window *window;
-	SDL_Surface *screenSurface;
-	SDL_Renderer *renderer;
-	bool initialized;
+	SDL_Window *window_;
+	SDL_Surface *screenSurface_;
+	SDL_Renderer *renderer_;
+	bool initialized_;
 };
 
 #endif

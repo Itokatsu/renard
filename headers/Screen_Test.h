@@ -22,10 +22,10 @@ class Screen_Test : public IGameScreen
 	Screen_Test();
 
   private:
-	static Screen_Test myTest;
-	SDL_Texture *texture_text;
-	SDL_Texture *texture_png;
-	Mix_Music *bg_music;
+	static Screen_Test myTest_;
+	SDL_Texture *textureText_;
+	SDL_Texture *texturePng_;
+	Mix_Music *bgMusic_;
 };
 
 #endif

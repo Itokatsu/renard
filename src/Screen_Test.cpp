@@ -2,7 +2,7 @@
 #include <iostream>
 #include "SDL.h"
 
-Screen_Test Screen_Test::myTest;
+Screen_Test Screen_Test::myTest_;
 
 Screen_Test::Screen_Test()
 {
@@ -12,9 +12,9 @@ void Screen_Test::Init(GameEngine *game)
 {
 	// texture_title = game->GetDrawEngine()->CreateTexture("../media/img/logoa2balles.png");
 	SDL_Color textColor = {0xBB, 0xBB, 0xBB, 0xFF};
-	texture_text = game->GetDrawEngine()->LoadText("TEST", textColor);
-	texture_png = game->GetDrawEngine()->LoadImage("media/img/kyo.png");
-	bg_music = game->GetSoundEngine()->loadMusic("media/sound/Wolf.mp3");
+	textureText_ = game->GetDrawEngine()->LoadText("TEST", textColor);
+	texturePng_ = game->GetDrawEngine()->LoadImage("media/img/kyo.png");
+	bgMusic_ = game->GetSoundEngine()->LoadMusic("media/sound/Wolf.mp3");
 	std::cout << "[TEST Screen Start]" << std::endl;
 }
 
@@ -55,7 +55,7 @@ void Screen_Test::HandleEvents(GameEngine *game)
 				{
 					if (Mix_PlayingMusic() == 0)
 					{
-						Mix_PlayMusic(bg_music, -1);
+						Mix_PlayMusic(bgMusic_, -1);
 					}
 					else
 					{
@@ -93,14 +93,14 @@ void Screen_Test::Draw(GameEngine *game)
 		for (int y = 0; y <= 480; y += 30)
 		{
 			SDL_Rect area = {x, y, 70, 28};
-			SDL_RenderCopy(rend, texture_text, NULL, &area);
+			SDL_RenderCopy(rend, textureText_, NULL, &area);
 		}
 	}
 	SDL_Rect png_area = {135, 105, 370, 300};
-	SDL_RenderCopy(rend, texture_png, NULL, &png_area);
+	SDL_RenderCopy(rend, texturePng_, NULL, &png_area);
 }
 
 Screen_Test *Screen_Test::Instance()
 {
-	return &myTest;
+	return &myTest_;
 }

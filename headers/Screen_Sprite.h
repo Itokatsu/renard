@@ -23,9 +23,9 @@ class Screen_Sprite : public IGameScreen
 	Screen_Sprite();
 
   private:
-	static Screen_Sprite myScreen;
-	SDL_Texture *texture_png;
-	Player *thePlayer;
+	static Screen_Sprite myScreen_;
+	SDL_Texture *texturePng_;
+	Player *thePlayer_;
 };
 
 #endif

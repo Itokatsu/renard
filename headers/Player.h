@@ -16,16 +16,16 @@ class Player
 
 	Sprite *GetSprite();
 	SDL_Point GetPosition();
-	vec2f GetVelocity();
-	void SetVelocity(vec2f v);
+	Vec2f GetVelocity();
+	void SetVelocity(Vec2f v);
 	void SetVelocity(float velX, float velY);
-	void AddVelocity(vec2f v);
+	void AddVelocity(Vec2f v);
 	SDL_Rect GetRect();
 
   private:
-	Sprite *mySprite;
-	SDL_Point position;
-	vec2f velocity;
+	Sprite *mySprite_;
+	SDL_Point position_;
+	Vec2f velocity_;
 };
 
 #endif

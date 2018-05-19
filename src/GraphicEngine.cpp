@@ -4,10 +4,10 @@
 
 GraphicEngine::GraphicEngine()
 {
-	window = NULL;
-	screenSurface = NULL;
-	initialized = false;
-	renderer = NULL;
+	window_ = NULL;
+	screenSurface_ = NULL;
+	initialized_ = false;
+	renderer_ = NULL;
 }
 
 bool GraphicEngine::Init(int width, int height)
@@ -27,30 +27,30 @@ bool GraphicEngine::Init(int width, int height)
 			success = false;
 		}
 		//Create window
-		window = SDL_CreateWindow("Game of the year : Hobo Edition", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+		window_ = SDL_CreateWindow("Game of the year : Hobo Edition", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 								  width, height, SDL_WINDOW_SHOWN);
-		if (window == NULL)
+		if (window_ == NULL)
 		{
 			std::cerr << "Window could not be created! SDL_Error: " << SDL_GetError() << std::endl;
 			success = false;
 		}
 		else
 		{
-			initialized = true;
+			initialized_ = true;
 			// for surface usage
 			// screenSurface = SDL_GetWindowSurface(window);
 
 			// creating renderer (texture usage)
-			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+			renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 			// renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED);
-			SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-			if (renderer == NULL)
+			SDL_SetRenderDrawBlendMode(renderer_, SDL_BLENDMODE_BLEND);
+			if (renderer_ == NULL)
 			{
 				std::cerr << "Renderer could not be created! SDL Error: " << SDL_GetError() << std::endl;
 				success = false;
 			}
-			SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-			SDL_RenderClear(renderer);
+			SDL_SetRenderDrawColor(renderer_, 0xFF, 0xFF, 0xFF, 0xFF);
+			SDL_RenderClear(renderer_);
 		}
 	}
 	return success;
@@ -58,17 +58,17 @@ bool GraphicEngine::Init(int width, int height)
 
 void GraphicEngine::Cleanup()
 {
-	if (initialized)
+	if (initialized_)
 	{
-		SDL_FreeSurface(screenSurface);
-		screenSurface = NULL;
+		SDL_FreeSurface(screenSurface_);
+		screenSurface_ = NULL;
 
-		SDL_DestroyRenderer(renderer);
-		renderer = NULL;
+		SDL_DestroyRenderer(renderer_);
+		renderer_ = NULL;
 
 		//Destroy window
-		SDL_DestroyWindow(window);
-		window = NULL;
+		SDL_DestroyWindow(window_);
+		window_ = NULL;
 
 		//Quit SDL subsystems
 		SDL_Quit();
@@ -77,5 +77,5 @@ void GraphicEngine::Cleanup()
 
 SDL_Renderer *GraphicEngine::GetRenderer()
 {
-	return renderer;
+	return renderer_;
 }

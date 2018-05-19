@@ -24,7 +24,7 @@ bool SoundEngine::Init()
 	return success;
 }
 
-Mix_Music *SoundEngine::loadMusic(std::string path)
+Mix_Music *SoundEngine::LoadMusic(std::string path)
 {
 	Mix_Music *m = NULL;
 	m = Mix_LoadMUS(path.c_str());
@@ -35,7 +35,7 @@ Mix_Music *SoundEngine::loadMusic(std::string path)
 	return m;
 }
 
-Mix_Chunk *SoundEngine::loadChunk(std::string path)
+Mix_Chunk *SoundEngine::LoadChunk(std::string path)
 {
 	Mix_Chunk *c = NULL;
 	c = Mix_LoadWAV(path.c_str());
@@ -49,12 +49,12 @@ Mix_Chunk *SoundEngine::loadChunk(std::string path)
 void SoundEngine::Cleanup()
 {
 	// delete maps
-	for (auto &music : ressources_musics)
+	for (auto &music : ressourcesMusics_)
 	{
 		Mix_FreeMusic(music);
 		music = NULL;
 	}
-	for (auto &chunk : ressources_chunks)
+	for (auto &chunk : ressourcesChunks_)
 	{
 		Mix_FreeChunk(chunk);
 		chunk = NULL;

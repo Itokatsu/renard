@@ -30,10 +30,10 @@ class IGameScreen
 	bool DisplayBG();
 
   protected:
-	bool paused = false;
+	bool paused_ = false;
 	//allowing background screen to update
-	bool allowRunningBG = false;
-	bool displayBG = false;
+	bool allowRunningBG_ = false;
+	bool displayBG_ = false;
 };
 
 #endif

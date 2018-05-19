@@ -39,29 +39,29 @@ class GameEngine
 
   private:
 	// stack of Screens
-	std::vector<IGameScreen *> screens;
+	std::vector<IGameScreen *> screens_;
 	// Screens to display
-	std::vector<IGameScreen *> screenDisplay;
+	std::vector<IGameScreen *> screenDisplay_;
 	// Screens to update
-	std::vector<IGameScreen *> screenRun;
+	std::vector<IGameScreen *> screenRun_;
 
-	int windowWidth;
-	int windowHeight;
+	int windowWidth_;
+	int windowHeight_;
 
-	bool running;
-	GraphicEngine *gfx;
-	DrawEngine *drawer;
-	SoundEngine *sound;
+	bool running_;
+	GraphicEngine *gfx_;
+	DrawEngine *drawer_;
+	SoundEngine *sound_;
 
 	// Timers and FPS counter
 	// Count ticks since the beginning
-	TimerSDL runTime;
+	TimerSDL runTime_;
 	// Count ticks since last update
-	TimerSDL updateTime;
+	TimerSDL updateTime_;
 	// Count ticks since last FPS display
-	TimerSDL FPSTimer;
+	TimerSDL fpsTimer_;
 	// # of frames displayed during last second
-	int framesThisSec;
+	int framesThisSec_;
 };
 
 #endif

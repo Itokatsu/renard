@@ -16,12 +16,12 @@ class SoundEngine
 	bool Init();
 	void Cleanup();
 
-	Mix_Music *loadMusic(std::string path);
-	Mix_Chunk *loadChunk(std::string path);
+	Mix_Music *LoadMusic(std::string path);
+	Mix_Chunk *LoadChunk(std::string path);
 
   private:
-	std::vector<Mix_Chunk *> ressources_chunks;
-	std::vector<Mix_Music *> ressources_musics;
+	std::vector<Mix_Chunk *> ressourcesChunks_;
+	std::vector<Mix_Music *> ressourcesMusics_;
 };
 
 #endif

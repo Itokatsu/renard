@@ -3,69 +3,69 @@
 Player::Player(GameEngine *game)
 {
 	SDL_Texture *tex = game->GetDrawEngine()->GetRessource("sprite.png");
-	mySprite = new Sprite(tex, 96 / 3, 128 / 4, 3, 100);
-	position = {100, 100};
-	velocity = {.0f, .0f};
+	mySprite_ = new Sprite(tex, 96 / 3, 128 / 4, 3, 100);
+	position_ = {100, 100};
+	velocity_ = {.0f, .0f};
 }
 
 void Player::Draw(GameEngine *game)
 {
 	SDL_Renderer *rend = game->GetGraphicEngine()->GetRenderer();
 	SDL_Rect spriteRect, coords;
-	spriteRect = mySprite->GetRect();
+	spriteRect = mySprite_->GetRect();
 	coords = GetRect();
 
-	SDL_RenderCopy(rend, mySprite->GetTexture(), &spriteRect, &coords);
+	SDL_RenderCopy(rend, mySprite_->GetTexture(), &spriteRect, &coords);
 }
 
 void Player::Update(GameEngine *game, float dt)
 {
-	if (velocity.x != 0 || velocity.y != 0)
+	if (velocity_.x != 0 || velocity_.y != 0)
 	{
-		mySprite->PlayAnim(dt);
+		mySprite_->PlayAnim(dt);
 	}
-	position.x += (velocity.x * dt * 0.5f);
-	position.y += (velocity.y * dt * 0.5f);
+	position_.x += (velocity_.x * dt * 0.5f);
+	position_.y += (velocity_.y * dt * 0.5f);
 
-	position.x = std::max(position.x, 0);
-	position.y = std::max(position.y, 0);
-	position.x = std::min(position.x, game->GetWindowWidth() - mySprite->GetWidth());
-	position.y = std::min(position.y, game->GetWindowHeight() - mySprite->GetHeight());
+	position_.x = std::max(position_.x, 0);
+	position_.y = std::max(position_.y, 0);
+	position_.x = std::min(position_.x, game->GetWindowWidth() - mySprite_->GetWidth());
+	position_.y = std::min(position_.y, game->GetWindowHeight() - mySprite_->GetHeight());
 }
 
 Sprite *Player::GetSprite()
 {
-	return mySprite;
+	return mySprite_;
 }
 
 SDL_Rect Player::GetRect()
 {
-	SDL_Rect rect = {position.x, position.y, mySprite->GetWidth(), mySprite->GetHeight()};
+	SDL_Rect rect = {position_.x, position_.y, mySprite_->GetWidth(), mySprite_->GetHeight()};
 	return rect;
 }
 
 SDL_Point Player::GetPosition()
 {
-	return position;
+	return position_;
 }
 
-vec2f Player::GetVelocity()
+Vec2f Player::GetVelocity()
 {
-	return velocity;
+	return velocity_;
 }
 
-void Player::SetVelocity(vec2f v)
+void Player::SetVelocity(Vec2f v)
 {
-	velocity = v;
+	velocity_ = v;
 }
 
 void Player::SetVelocity(float velX, float velY)
 {
-	velocity.x = velX;
-	velocity.y = velY;
+	velocity_.x = velX;
+	velocity_.y = velY;
 }
 
-void Player::AddVelocity(vec2f v)
+void Player::AddVelocity(Vec2f v)
 {
-	velocity += v;
+	velocity_ += v;
 }

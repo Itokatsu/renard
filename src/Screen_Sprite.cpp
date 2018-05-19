@@ -2,7 +2,7 @@
 #include <iostream>
 #include "SDL.h"
 
-Screen_Sprite Screen_Sprite::myScreen;
+Screen_Sprite Screen_Sprite::myScreen_;
 
 Screen_Sprite::Screen_Sprite()
 {
@@ -12,7 +12,7 @@ void Screen_Sprite::Init(GameEngine *game)
 {
 	// texture_title = game->GetDrawEngine()->CreateTexture("../media/img/logoa2balles.png");
 	game->GetDrawEngine()->LoadImage("media/img/sprite.png");
-	thePlayer = new Player(game);
+	thePlayer_ = new Player(game);
 	std::cout << "[Sprite Screen Start]" << std::endl;
 }
 
@@ -51,20 +51,20 @@ void Screen_Sprite::HandleEvents(GameEngine *game)
 					break;
 				// directions
 				case SDLK_UP:
-					thePlayer->GetSprite()->SetDirection(Sprite::Direction::HAUT);
-					thePlayer->AddVelocity({0, -1});
+					thePlayer_->GetSprite()->SetDirection(Sprite::Direction::HAUT);
+					thePlayer_->AddVelocity({0, -1});
 					break;
 				case SDLK_DOWN:
-					thePlayer->GetSprite()->SetDirection(Sprite::Direction::BAS);
-					thePlayer->AddVelocity({0, 1});
+					thePlayer_->GetSprite()->SetDirection(Sprite::Direction::BAS);
+					thePlayer_->AddVelocity({0, 1});
 					break;
 				case SDLK_RIGHT:
-					thePlayer->GetSprite()->SetDirection(Sprite::Direction::DROITE);
-					thePlayer->AddVelocity({1, 0});
+					thePlayer_->GetSprite()->SetDirection(Sprite::Direction::DROITE);
+					thePlayer_->AddVelocity({1, 0});
 					break;
 				case SDLK_LEFT:
-					thePlayer->GetSprite()->SetDirection(Sprite::Direction::GAUCHE);
-					thePlayer->AddVelocity({-1, 0});
+					thePlayer_->GetSprite()->SetDirection(Sprite::Direction::GAUCHE);
+					thePlayer_->AddVelocity({-1, 0});
 					break;
 				}
 			}
@@ -74,19 +74,19 @@ void Screen_Sprite::HandleEvents(GameEngine *game)
 				{
 				// Directions
 				case SDLK_UP:
-					thePlayer->AddVelocity({0, 1});
+					thePlayer_->AddVelocity({0, 1});
 					break;
 
 				case SDLK_DOWN:
-					thePlayer->AddVelocity({0, -1});
+					thePlayer_->AddVelocity({0, -1});
 					break;
 
 				case SDLK_RIGHT:
-					thePlayer->AddVelocity({-1, 0});
+					thePlayer_->AddVelocity({-1, 0});
 					break;
 
 				case SDLK_LEFT:
-					thePlayer->AddVelocity({1, 0});
+					thePlayer_->AddVelocity({1, 0});
 					break;
 				}
 			}
@@ -96,15 +96,15 @@ void Screen_Sprite::HandleEvents(GameEngine *game)
 
 void Screen_Sprite::Update(GameEngine *game, float dt)
 {
-	thePlayer->Update(game, dt);
+	thePlayer_->Update(game, dt);
 }
 
 void Screen_Sprite::Draw(GameEngine *game)
 {
-	thePlayer->Draw(game);
+	thePlayer_->Draw(game);
 }
 
 Screen_Sprite *Screen_Sprite::Instance()
 {
-	return &myScreen;
+	return &myScreen_;
 }

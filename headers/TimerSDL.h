@@ -6,36 +6,36 @@
 class TimerSDL
 {
   public:
-	void start()
+	void Start()
 	{
-		startTime = SDL_GetTicks();
-		started = true;
+		startTime_ = SDL_GetTicks();
+		started_ = true;
 	}
 
-	Uint32 getTime()
+	Uint32 GetTime()
 	{
-		return SDL_GetTicks() - startTime;
+		return SDL_GetTicks() - startTime_;
 	}
 
-	void reset()
+	void Reset()
 	{
-		startTime = SDL_GetTicks();
+		startTime_ = SDL_GetTicks();
 	}
 
-	void stop()
+	void Stop()
 	{
-		startTime = 0;
-		started = false;
+		startTime_ = 0;
+		started_ = false;
 	}
 
-	bool isRunning()
+	bool IsRunning()
 	{
-		return started;
+		return started_;
 	}
 
   private:
-	Uint32 startTime;
-	bool started;
+	Uint32 startTime_;
+	bool started_;
 };
 
 #endif

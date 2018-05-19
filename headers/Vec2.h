@@ -5,79 +5,94 @@
 #include "SDL.h"
 
 template <class T>
-class vec2 {
-public:
+class Vec2
+{
+  public:
 	T x, y;
-	
-	vec2() :x(0), y(0) {}
-	vec2(T x, T y) : x(x), y(y) {}
-	vec2(const vec2& v) : x(v.x), y(v.y) {}
-	
-	vec2& operator=(const vec2& v) {
+
+	Vec2() : x(0), y(0) {}
+	Vec2(T x, T y) : x(x), y(y) {}
+	Vec2(const Vec2 &v) : x(v.x), y(v.y) {}
+
+	Vec2 &operator=(const Vec2 &v)
+	{
 		x = v.x;
 		y = v.y;
 		return *this;
 	}
-	
-	vec2 operator+(vec2& v) {
-		return vec2(x + v.x, y + v.y);
+
+	Vec2 operator+(Vec2 &v)
+	{
+		return Vec2(x + v.x, y + v.y);
 	}
-	vec2 operator-(vec2& v) {
-		return vec2(x - v.x, y - v.y);
+	Vec2 operator-(Vec2 &v)
+	{
+		return Vec2(x - v.x, y - v.y);
 	}
-	
-	vec2& operator+=(vec2& v) {
+
+	Vec2 &operator+=(Vec2 &v)
+	{
 		x += v.x;
 		y += v.y;
 		return *this;
 	}
-	vec2& operator-=(vec2& v) {
+	Vec2 &operator-=(Vec2 &v)
+	{
 		x -= v.x;
 		y -= v.y;
 		return *this;
 	}
-	
-	vec2 operator+(double s) {
-		return vec2(x + s, y + s);
+
+	Vec2 operator+(double s)
+	{
+		return Vec2(x + s, y + s);
 	}
-	vec2 operator-(double s) {
-		return vec2(x - s, y - s);
+	Vec2 operator-(double s)
+	{
+		return Vec2(x - s, y - s);
 	}
-	vec2 operator*(double s) {
-		return vec2(x * s, y * s);
+	Vec2 operator*(double s)
+	{
+		return Vec2(x * s, y * s);
 	}
-	vec2 operator/(double s) {
-		return vec2(x / s, y / s);
+	Vec2 operator/(double s)
+	{
+		return Vec2(x / s, y / s);
 	}
-	
-	
-	vec2& operator+=(double s) {
+
+	Vec2 &operator+=(double s)
+	{
 		x += s;
 		y += s;
 		return *this;
 	}
-	vec2& operator-=(double s) {
+	Vec2 &operator-=(double s)
+	{
 		x -= s;
 		y -= s;
 		return *this;
 	}
-	vec2& operator*=(double s) {
+	Vec2 &operator*=(double s)
+	{
 		x *= s;
 		y *= s;
 		return *this;
 	}
-	vec2& operator/=(double s) {
+	Vec2 &operator/=(double s)
+	{
 		x /= s;
 		y /= s;
 		return *this;
 	}
-	
-	void set(T x, T y) {
+
+	void Set(T x, T y)
+	{
 		this->x = x;
 		this->y = y;
 	}
-	
-	void rotate(double deg) {
+
+	void Rotate(double deg)
+	{
 		double theta = deg / 180.0 * M_PI;
 		double c = cos(theta);
 		double s = sin(theta);
@@ -86,47 +101,54 @@ public:
 		x = tx;
 		y = ty;
 	}
-	
-	vec2& normalize() {
-		if (length() == 0) return *this;
+
+	Vec2 &Normalize()
+	{
+		if (length() == 0)
+			return *this;
 		*this *= (1.0 / length());
 		return *this;
 	}
-	
-	float dist(vec2 v) const {
-		vec2 d(v.x - x, v.y - y);
+
+	float Dist(Vec2 v) const
+	{
+		Vec2 d(v.x - x, v.y - y);
 		return d.length();
 	}
-	float length() const {
+	float Length() const
+	{
 		return std::sqrt(x * x + y * y);
 	}
-	void truncate(double length) {
+	void Truncate(double length)
+	{
 		double angle = atan2f(y, x);
 		x = length * cos(angle);
 		y = length * sin(angle);
 	}
-	
-	vec2 ortho() const {
-		return vec2(y, -x);
+
+	Vec2 Ortho() const
+	{
+		return Vec2(y, -x);
 	}
-	
-	static float dot(vec2 v1, vec2 v2) {
+
+	static float Fot(Vec2 v1, Vec2 v2)
+	{
 		return v1.x * v2.x + v1.y * v2.y;
 	}
-	static float cross(vec2 v1, vec2 v2) {
+	static float Cross(Vec2 v1, Vec2 v2)
+	{
 		return (v1.x * v2.y) - (v1.y * v2.x);
 	}
-	
-	SDL_Point ToSDLPoint() {
+
+	SDL_Point ToSDLPoint()
+	{
 		return {
-			x >= 0 ? (int)(x+0.5) : (int)(x-0.5),
-			y >= 0 ? (int)(y+0.5) : (int)(y-0.5)
-		};
+			x >= 0 ? (int)(x + 0.5) : (int)(x - 0.5),
+			y >= 0 ? (int)(y + 0.5) : (int)(y - 0.5)};
 	}
 };
 
-typedef vec2<float> vec2f;
-typedef vec2<double> vec2d;
-
+typedef Vec2<float> Vec2f;
+typedef Vec2<double> Vec2d;
 
 #endif

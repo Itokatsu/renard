@@ -3,66 +3,66 @@
 Sprite::Sprite(SDL_Texture *tex, int width, int height,
 			   unsigned int maxImg, float speed)
 {
-	texture = tex;
-	frameWidth = width;
-	frameHeight = height;
-	numFrames = maxImg;
-	animSpeed = speed;
-	animated = (maxImg > 1 && speed > 0.0);
+	texture_ = tex;
+	frameWidth_ = width;
+	frameHeight_ = height;
+	numFrames_ = maxImg;
+	animSpeed_ = speed;
+	animated_ = (maxImg > 1 && speed > 0.0);
 
-	direction = Direction::BAS;
-	animTime = 0;
-	currentFrame = 0;
+	direction_ = Direction::BAS;
+	animTime_ = 0;
+	currentFrame_ = 0;
 }
 
 void Sprite::NextAnim()
 {
-	currentFrame = (currentFrame + 1) % numFrames;
+	currentFrame_ = (currentFrame_ + 1) % numFrames_;
 }
 
 void Sprite::PlayAnim(float dt)
 {
-	if (!animated)
+	if (!animated_)
 		return;
-	animTime += dt;
-	if (animTime > animSpeed)
+	animTime_ += dt;
+	if (animTime_ > animSpeed_)
 	{
 		NextAnim();
-		animTime -= animSpeed;
+		animTime_ -= animSpeed_;
 	}
 }
 
 SDL_Rect Sprite::GetRect()
 {
 	SDL_Rect rekt = {
-		currentFrame * frameWidth,
-		direction * frameHeight,
-		frameWidth,
-		frameHeight};
+		currentFrame_ * frameWidth_,
+		direction_ * frameHeight_,
+		frameWidth_,
+		frameHeight_};
 	return rekt;
 }
 
 SDL_Texture *Sprite::GetTexture()
 {
-	return texture;
+	return texture_;
 }
 
 int Sprite::GetWidth()
 {
-	return frameWidth;
+	return frameWidth_;
 }
 
 int Sprite::GetHeight()
 {
-	return frameHeight;
+	return frameHeight_;
 }
 
 void Sprite::SetSpeed(float speed)
 {
-	animSpeed = speed;
+	animSpeed_ = speed;
 }
 
 void Sprite::SetDirection(Direction d)
 {
-	direction = d;
+	direction_ = d;
 }
