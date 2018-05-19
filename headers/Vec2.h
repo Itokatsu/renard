@@ -104,16 +104,16 @@ class Vec2
 
 	Vec2 &Normalize()
 	{
-		if (length() == 0)
+		if (Length() == 0)
 			return *this;
-		*this *= (1.0 / length());
+		*this *= (1.0 / Length());
 		return *this;
 	}
 
 	float Dist(Vec2 v) const
 	{
 		Vec2 d(v.x - x, v.y - y);
-		return d.length();
+		return d.Length();
 	}
 	float Length() const
 	{
