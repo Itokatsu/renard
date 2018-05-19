@@ -11,13 +11,8 @@ Screen_Sprite::Screen_Sprite()
 void Screen_Sprite::Init(GameEngine *game)
 {
 	// texture_title = game->GetDrawEngine()->CreateTexture("../media/img/logoa2balles.png");
-	texture_png = game->GetDrawEngine()->LoadImage("media/img/sprite.png");
-	mySprite = new Sprite(texture_png, 96 / 3, 128 / 4, 3, 100);
-
-	sprite_xspeed = 0;
-	sprite_yspeed = 0;
-	sprite_x = 100;
-	sprite_y = 100;
+	game->GetDrawEngine()->LoadImage("media/img/sprite.png");
+	thePlayer = new Player(game);
 	std::cout << "[Sprite Screen Start]" << std::endl;
 }
 
@@ -49,52 +44,50 @@ void Screen_Sprite::HandleEvents(GameEngine *game)
 			// Key press
 			if (e.type == SDL_KEYDOWN && e.key.repeat == 0)
 			{
-				// ESCAPE is pressed
-				if (e.key.keysym.sym == SDLK_ESCAPE)
+				switch (e.key.keysym.sym)
 				{
+				case SDLK_ESCAPE:
 					game->Quit();
-				}
-
-				// Directions
-				if (e.key.keysym.sym == SDLK_UP)
-				{
-					mySprite->SetDirection(Sprite::Direction::HAUT);
-					sprite_yspeed -= 1;
-				}
-				if (e.key.keysym.sym == SDLK_DOWN)
-				{
-					mySprite->SetDirection(Sprite::Direction::BAS);
-					sprite_yspeed += 1;
-				}
-				if (e.key.keysym.sym == SDLK_RIGHT)
-				{
-					mySprite->SetDirection(Sprite::Direction::DROITE);
-					sprite_xspeed += 1;
-				}
-				if (e.key.keysym.sym == SDLK_LEFT)
-				{
-					mySprite->SetDirection(Sprite::Direction::GAUCHE);
-					sprite_xspeed -= 1;
+					break;
+				// directions
+				case SDLK_UP:
+					thePlayer->GetSprite()->SetDirection(Sprite::Direction::HAUT);
+					thePlayer->AddVelocity({0, -1});
+					break;
+				case SDLK_DOWN:
+					thePlayer->GetSprite()->SetDirection(Sprite::Direction::BAS);
+					thePlayer->AddVelocity({0, 1});
+					break;
+				case SDLK_RIGHT:
+					thePlayer->GetSprite()->SetDirection(Sprite::Direction::DROITE);
+					thePlayer->AddVelocity({1, 0});
+					break;
+				case SDLK_LEFT:
+					thePlayer->GetSprite()->SetDirection(Sprite::Direction::GAUCHE);
+					thePlayer->AddVelocity({-1, 0});
+					break;
 				}
 			}
 			else if (e.type == SDL_KEYUP)
 			{
+				switch (e.key.keysym.sym)
+				{
 				// Directions
-				if (e.key.keysym.sym == SDLK_UP)
-				{
-					sprite_yspeed += 1;
-				}
-				if (e.key.keysym.sym == SDLK_DOWN)
-				{
-					sprite_yspeed -= 1;
-				}
-				if (e.key.keysym.sym == SDLK_RIGHT)
-				{
-					sprite_xspeed -= 1;
-				}
-				if (e.key.keysym.sym == SDLK_LEFT)
-				{
-					sprite_xspeed += 1;
+				case SDLK_UP:
+					thePlayer->AddVelocity({0, 1});
+					break;
+
+				case SDLK_DOWN:
+					thePlayer->AddVelocity({0, -1});
+					break;
+
+				case SDLK_RIGHT:
+					thePlayer->AddVelocity({-1, 0});
+					break;
+
+				case SDLK_LEFT:
+					thePlayer->AddVelocity({1, 0});
+					break;
 				}
 			}
 		}
@@ -103,27 +96,12 @@ void Screen_Sprite::HandleEvents(GameEngine *game)
 
 void Screen_Sprite::Update(GameEngine *game, float dt)
 {
-	if (sprite_xspeed != 0 || sprite_yspeed != 0)
-	{
-		mySprite->PlayAnim(dt);
-	}
-	sprite_x += (sprite_xspeed * dt * 0.5);
-	sprite_y += (sprite_yspeed * dt * 0.5);
-
-	sprite_x = std::max(sprite_x, 0);
-	sprite_y = std::max(sprite_y, 0);
-	sprite_x = std::min(sprite_x, game->GetWindowWidth() - mySprite->GetWidth());
-	sprite_y = std::min(sprite_y, game->GetWindowHeight() - mySprite->GetHeight());
+	thePlayer->Update(game, dt);
 }
 
 void Screen_Sprite::Draw(GameEngine *game)
 {
-	SDL_Renderer *rend = game->GetGraphicEngine()->GetRenderer();
-	SDL_Rect coord, spriteRect;
-	coord = {sprite_x, sprite_y, mySprite->GetWidth(), mySprite->GetHeight()};
-	spriteRect = mySprite->GetRect();
-
-	SDL_RenderCopy(rend, texture_png, &spriteRect, &coord);
+	thePlayer->Draw(game);
 }
 
 Screen_Sprite *Screen_Sprite::Instance()

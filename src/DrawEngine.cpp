@@ -34,11 +34,14 @@ bool DrawEngine::Init(GraphicEngine *gfx)
 
 void DrawEngine::Cleanup()
 {
-	//clean map
-	/*for ( auto &texture : ressources) {
+	// clean map
+	for (auto &pair : ressources)
+	{
+		SDL_Texture* texture = pair.second;
 		SDL_DestroyTexture(texture);
 		texture = NULL;
-	}*/
+	}
+	ressources.clear();
 
 	TTF_CloseFont(font);
 	font = NULL;
@@ -65,6 +68,11 @@ SDL_Texture *DrawEngine::LoadImage(std::string imgPath)
 		SDL_FreeSurface(tempSurface);
 	}
 
+	// Push into ressources map.
+	int const pos = imgPath.find_last_of('/');
+	const std::string leaf = imgPath.substr(pos + 1);
+	ressources[leaf] = newTexture;
+
 	return newTexture;
 }
 
@@ -88,6 +96,14 @@ SDL_Texture *DrawEngine::LoadText(std::string text, SDL_Color color)
 	}
 
 	return newTexture;
+}
+
+SDL_Texture *DrawEngine::GetRessource(std::string key)
+{
+	int c = ressources.count(key);
+	if (c == 0) return 
+		NULL;
+	return ressources.at(key);
 }
 
 // 	void Load(std::string className, std::string file);

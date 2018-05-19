@@ -2,7 +2,7 @@
 #define DEF_SCREEN_SPRITE
 
 #include "IGameScreen.h"
-#include "Sprite.h"
+#include "Player.h"
 class Screen_Sprite : public IGameScreen
 {
 
@@ -13,9 +13,9 @@ class Screen_Sprite : public IGameScreen
 	void Pause();
 	void Unpause();
 
-	void HandleEvents(GameEngine *game);
-	void Update(GameEngine *game, float dT);
-	void Draw(GameEngine *game);
+	void HandleEvents(GameEngine *);
+	void Update(GameEngine *, float);
+	void Draw(GameEngine *);
 
 	static Screen_Sprite *Instance();
 
@@ -25,12 +25,7 @@ class Screen_Sprite : public IGameScreen
   private:
 	static Screen_Sprite myScreen;
 	SDL_Texture *texture_png;
-	Sprite *mySprite;
-	int sprite_x;
-	int sprite_y;
-
-	float sprite_xspeed;
-	float sprite_yspeed;
+	Player* thePlayer;
 };
 
 #endif

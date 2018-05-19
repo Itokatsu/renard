@@ -18,6 +18,7 @@ class DrawEngine
 	void Load(std::string className, std::string file);
 	SDL_Texture *LoadImage(std::string imgPath);
 	SDL_Texture *LoadText(std::string text, SDL_Color color);
+	SDL_Texture *GetRessource(std::string key);
 
   private:
 	std::map<std::string, SDL_Texture *> ressources;
