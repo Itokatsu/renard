@@ -24,8 +24,12 @@ void Player::Update(GameEngine *game, float dt)
 	{
 		mySprite_->PlayAnim(dt);
 	}
-	position_.x += (velocity_.x * dt * 0.5f);
-	position_.y += (velocity_.y * dt * 0.5f);
+	
+	Vec2f normalizedVel = velocity_;
+	normalizedVel.Normalize();
+
+	position_.x += (normalizedVel.x * dt * 0.5f);
+	position_.y += (normalizedVel.y * dt * 0.5f);
 
 	position_.x = std::max(position_.x, 0);
 	position_.y = std::max(position_.y, 0);
