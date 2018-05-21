@@ -2,6 +2,10 @@
 #include <iostream>
 #include "SDL.h"
 
+#include "Player.h"
+#include "Enemy.h"
+#include "Screen_Pause.h"
+
 Screen_Sprite Screen_Sprite::myScreen_;
 
 Screen_Sprite::Screen_Sprite()
@@ -10,14 +14,23 @@ Screen_Sprite::Screen_Sprite()
 
 void Screen_Sprite::Init(GameEngine *game)
 {
-	// texture_title = game->GetDrawEngine()->CreateTexture("../media/img/logoa2balles.png");
 	game->GetDrawEngine()->LoadImage("media/img/sprite.png");
-	thePlayer_ = new Player(game);
+	thePlayer_ = new Player(game, game->GetWindowWidth()/2 - 20, game->GetWindowHeight() -100 );
+	
+	for(int i = 0; i < 5; i++)
+	{
+		enemies_.push_back(new Enemy(game, (1+i)*100, 150));
+	}
+
+
+	//entities_.push_back(thePlayer_);
+	
 	std::cout << "[Sprite Screen Start]" << std::endl;
 }
 
 void Screen_Sprite::Cleanup()
 {
+	//entities_.clear();
 	std::cout << "[Sprite Screen Quit]" << std::endl;
 }
 
@@ -27,6 +40,23 @@ void Screen_Sprite::Pause()
 
 void Screen_Sprite::Unpause()
 {
+	IGameScreen::Unpause();
+	thePlayer_->SetVelocity({0.f, 0.f});
+	float baseSpd = 1;
+	//SDL_PumpEvents();
+	const Uint8* keyStates = SDL_GetKeyboardState(NULL);
+	if( keyStates[SDL_SCANCODE_UP]) {
+		thePlayer_->AddVelocity({0.f, -baseSpd});
+	}
+	if( keyStates[SDL_SCANCODE_DOWN]) {
+		thePlayer_->AddVelocity({0.f, baseSpd});
+	}
+	if( keyStates[SDL_SCANCODE_LEFT]) {
+		thePlayer_->AddVelocity({-baseSpd, 0.f});
+	}
+	if( keyStates[SDL_SCANCODE_RIGHT]) {
+		thePlayer_->AddVelocity({baseSpd, 0.f});
+	}
 }
 
 void Screen_Sprite::HandleEvents(GameEngine *game)
@@ -47,7 +77,11 @@ void Screen_Sprite::HandleEvents(GameEngine *game)
 				switch (e.key.keysym.sym)
 				{
 				case SDLK_ESCAPE:
-					game->Quit();
+					game->PopScreen();
+					break;
+				// P for Pause
+				case SDLK_p:
+					game->PushScreen(Screen_Pause::Instance());
 					break;
 				// directions
 				case SDLK_UP:
@@ -97,11 +131,22 @@ void Screen_Sprite::HandleEvents(GameEngine *game)
 void Screen_Sprite::Update(GameEngine *game, float dt)
 {
 	thePlayer_->Update(game, dt);
+
+	for(auto & e : enemies_)
+	{
+		e->Update(game, dt);
+	}
 }
 
 void Screen_Sprite::Draw(GameEngine *game)
 {
 	thePlayer_->Draw(game);
+
+	for(auto & e : enemies_)
+	{
+		e->Draw(game);
+	}
+	
 }
 
 Screen_Sprite *Screen_Sprite::Instance()

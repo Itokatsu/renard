@@ -1,11 +1,19 @@
 #include "Player.h"
-#include <iostream>
 
 Player::Player(GameEngine *game)
 {
 	SDL_Texture *tex = game->GetDrawEngine()->GetRessource("sprite.png");
 	mySprite_ = new Sprite(tex, 96 / 3, 128 / 4, 3, 100);
 	position_ = {100, 100};
+	velocity_ = {.0f, .0f};
+	maxSpeed_ = 0.5;
+}
+
+Player::Player(GameEngine *game, int posX, int posY)
+{
+	SDL_Texture *tex = game->GetDrawEngine()->GetRessource("sprite.png");
+	mySprite_ = new Sprite(tex, 96 / 3, 128 / 4, 3, 100);
+	position_ = {posX, posY};
 	velocity_ = {.0f, .0f};
 	maxSpeed_ = 0.5;
 }
