@@ -35,6 +35,7 @@ void Screen_Sprite::Cleanup()
 
 void Screen_Sprite::Pause()
 {
+	IGameScreen::Pause();
 }
 
 void Screen_Sprite::Unpause()
