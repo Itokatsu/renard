@@ -15,16 +15,15 @@ Screen_Sprite::Screen_Sprite()
 void Screen_Sprite::Init(GameEngine *game)
 {
 	game->GetDrawEngine()->LoadImage("media/img/sprite.png");
-	thePlayer_ = new Player(game, game->GetWindowWidth()/2 - 20, game->GetWindowHeight() -100 );
-	
-	for(int i = 0; i < 5; i++)
+	thePlayer_ = new Player(game, game->GetWindowWidth() / 2 - 20, game->GetWindowHeight() - 100);
+
+	for (int i = 0; i < 5; i++)
 	{
-		enemies_.push_back(new Enemy(game, (1+i)*100, 150));
+		enemies_.push_back(new Enemy(game, (1 + i) * 100, 150));
 	}
 
-
 	//entities_.push_back(thePlayer_);
-	
+
 	std::cout << "[Sprite Screen Start]" << std::endl;
 }
 
@@ -44,17 +43,21 @@ void Screen_Sprite::Unpause()
 	thePlayer_->SetVelocity({0.f, 0.f});
 	float baseSpd = 1;
 	//SDL_PumpEvents();
-	const Uint8* keyStates = SDL_GetKeyboardState(NULL);
-	if( keyStates[SDL_SCANCODE_UP]) {
+	const Uint8 *keyStates = SDL_GetKeyboardState(NULL);
+	if (keyStates[SDL_SCANCODE_UP])
+	{
 		thePlayer_->AddVelocity({0.f, -baseSpd});
 	}
-	if( keyStates[SDL_SCANCODE_DOWN]) {
+	if (keyStates[SDL_SCANCODE_DOWN])
+	{
 		thePlayer_->AddVelocity({0.f, baseSpd});
 	}
-	if( keyStates[SDL_SCANCODE_LEFT]) {
+	if (keyStates[SDL_SCANCODE_LEFT])
+	{
 		thePlayer_->AddVelocity({-baseSpd, 0.f});
 	}
-	if( keyStates[SDL_SCANCODE_RIGHT]) {
+	if (keyStates[SDL_SCANCODE_RIGHT])
+	{
 		thePlayer_->AddVelocity({baseSpd, 0.f});
 	}
 }
@@ -132,7 +135,7 @@ void Screen_Sprite::Update(GameEngine *game, float dt)
 {
 	thePlayer_->Update(game, dt);
 
-	for(auto & e : enemies_)
+	for (auto &e : enemies_)
 	{
 		e->Update(game, dt);
 	}
@@ -142,11 +145,10 @@ void Screen_Sprite::Draw(GameEngine *game)
 {
 	thePlayer_->Draw(game);
 
-	for(auto & e : enemies_)
+	for (auto &e : enemies_)
 	{
 		e->Draw(game);
 	}
-	
 }
 
 Screen_Sprite *Screen_Sprite::Instance()
