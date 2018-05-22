@@ -2,12 +2,12 @@
 #define DEF_PLAYER
 
 #include "SDL.h"
-//#include "IEntity.h"
+#include "IEntity.h"
 #include "Vec2.h"
 #include "GameEngine.h"
 #include "Sprite.h"
 
-class Player 
+class Player : public IEntity
 {
   public:
 	Player(GameEngine *game);

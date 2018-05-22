@@ -10,7 +10,7 @@ Screen_Pause::Screen_Pause()
 	displayBG_ = true;
 }
 
-void Screen_Pause::Init(GameEngine* game)
+void Screen_Pause::Init(GameEngine*)
 {
 	std::cout << "[Pause Screen Start]" << std::endl;
 }
@@ -49,7 +49,7 @@ void Screen_Pause::HandleEvents(GameEngine* game)
 	}
 }
 
-void Screen_Pause::Update(GameEngine* game, float dt)
+void Screen_Pause::Update(GameEngine*, float)
 {
 
 }

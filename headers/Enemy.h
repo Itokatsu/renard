@@ -2,12 +2,12 @@
 #define DEF_ENEMY
 
 #include "SDL.h"
-//#include "IEntity.h"
+#include "IEntity.h"
 #include "Vec2.h"
 #include "GameEngine.h"
 #include "Sprite.h"
 
-class Enemy
+class Enemy : public IEntity
 {
   public:
 	Enemy(GameEngine *, int posX, int posY);

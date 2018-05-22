@@ -19,10 +19,10 @@ void Screen_Sprite::Init(GameEngine *game)
 
 	for (int i = 0; i < 5; i++)
 	{
-		enemies_.push_back(new Enemy(game, (1 + i) * 100, 150));
+		entities_.push_back(new Enemy(game, (1 + i) * 100, 150));
 	}
 
-	//entities_.push_back(thePlayer_);
+	entities_.push_back(thePlayer_);
 
 	std::cout << "[Sprite Screen Start]" << std::endl;
 }
@@ -134,9 +134,7 @@ void Screen_Sprite::HandleEvents(GameEngine *game)
 
 void Screen_Sprite::Update(GameEngine *game, float dt)
 {
-	thePlayer_->Update(game, dt);
-
-	for (auto &e : enemies_)
+	for (auto &e : entities_)
 	{
 		e->Update(game, dt);
 	}
@@ -144,9 +142,7 @@ void Screen_Sprite::Update(GameEngine *game, float dt)
 
 void Screen_Sprite::Draw(GameEngine *game)
 {
-	thePlayer_->Draw(game);
-
-	for (auto &e : enemies_)
+	for (auto &e : entities_)
 	{
 		e->Draw(game);
 	}

@@ -2,7 +2,7 @@
 #define DEF_SCREEN_SPRITE
 
 #include "IGameScreen.h"
-// #include "IEntity.h"
+#include "IEntity.h"
 #include "Enemy.h"
 #include "Player.h"
 class Screen_Sprite : public IGameScreen
@@ -26,7 +26,7 @@ class Screen_Sprite : public IGameScreen
 
   private:
 	static Screen_Sprite myScreen_;
-	//std::vector<IEntity*> entities_;
+	std::vector<IEntity*> entities_;
 	Player *thePlayer_;
 	std::vector<Enemy*> enemies_;
 };

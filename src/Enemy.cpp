@@ -1,8 +1,5 @@
 #include "Enemy.h"
 
-//TODO
-//Interface Moving
-
 Enemy::Enemy(GameEngine *, int posX, int posY)
 {
 	position_ = {posX, posY};
