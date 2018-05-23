@@ -16,6 +16,7 @@ class Player : public IEntity
 	void Draw(GameEngine *game);
 	void Update(GameEngine *game, float dt);
 
+	bool IsDead();
 	Sprite *GetSprite();
 	SDL_Point GetPosition();
 	Vec2f GetVelocity();
@@ -29,6 +30,7 @@ class Player : public IEntity
 	SDL_Point position_;
 	Vec2f velocity_;
 	float maxSpeed_;
+	int health_;
 };
 
 #endif

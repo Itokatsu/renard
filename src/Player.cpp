@@ -7,6 +7,7 @@ Player::Player(GameEngine *game)
 	position_ = {100, 100};
 	velocity_ = {.0f, .0f};
 	maxSpeed_ = 0.5;
+	health_ = 10;
 }
 
 Player::Player(GameEngine *game, int posX, int posY)
@@ -16,6 +17,7 @@ Player::Player(GameEngine *game, int posX, int posY)
 	position_ = {posX, posY};
 	velocity_ = {.0f, .0f};
 	maxSpeed_ = 0.5;
+	health_ = 10;
 }
 
 void Player::Draw(GameEngine *game)
@@ -56,6 +58,11 @@ void Player::Update(GameEngine *game, float dt)
 	position_.y = std::min(position_.y, game->GetWindowHeight() - mySprite_->GetHeight());
 }
 
+bool Player::IsDead() 
+{
+	return (health_ <= 0);
+}
+
 Sprite *Player::GetSprite()
 {
 	return mySprite_;
@@ -63,7 +70,12 @@ Sprite *Player::GetSprite()
 
 SDL_Rect Player::GetRect()
 {
-	SDL_Rect rect = {position_.x, position_.y, mySprite_->GetWidth(), mySprite_->GetHeight()};
+	SDL_Rect rect = {	
+		position_.x, 
+		position_.y, 
+		mySprite_->GetWidth(), 
+		mySprite_->GetHeight()
+	};
 	return rect;
 }
 

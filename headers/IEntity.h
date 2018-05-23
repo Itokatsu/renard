@@ -11,6 +11,7 @@ class IEntity
 
 	virtual void Draw(GameEngine *game) = 0;
 	virtual void Update(GameEngine *game, float dt) = 0;
+	virtual bool IsDead() = 0;
 
 	virtual SDL_Point GetPosition() = 0;
 };

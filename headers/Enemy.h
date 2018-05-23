@@ -15,6 +15,7 @@ class Enemy : public IEntity
 	void Draw(GameEngine *game);
 	void Update(GameEngine *game, float dt);
 
+	bool IsDead();
 	SDL_Point GetPosition();
 	Vec2f GetVelocity();
 	void SetVelocity(Vec2f v);
@@ -31,6 +32,9 @@ class Enemy : public IEntity
 	float maxSpeed_;
 	int health_;
 	SDL_Color color_;
+	// time to live (ms)
+	int ttl_;
+
 };
 
 #endif

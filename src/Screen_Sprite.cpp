@@ -136,7 +136,8 @@ void Screen_Sprite::Update(GameEngine *game, float dt)
 {
 	for (auto &e : entities_)
 	{
-		e->Update(game, dt);
+		if (!e->IsDead())
+			e->Update(game, dt);
 	}
 }
 
@@ -144,7 +145,8 @@ void Screen_Sprite::Draw(GameEngine *game)
 {
 	for (auto &e : entities_)
 	{
-		e->Draw(game);
+		if (!e->IsDead())
+			e->Draw(game);
 	}
 }
 

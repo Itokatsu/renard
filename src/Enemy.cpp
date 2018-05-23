@@ -1,5 +1,6 @@
 #include "Enemy.h"
 
+
 Enemy::Enemy(GameEngine *, int posX, int posY)
 {
 	position_ = {posX, posY};
@@ -9,6 +10,7 @@ Enemy::Enemy(GameEngine *, int posX, int posY)
 	width_ = 32;
 	height_ = 32;
 	color_ = {0x00, 0xFF, 0x00, 0xFF};
+	ttl_ = std::rand();
 }
 
 void Enemy::Draw(GameEngine *game)
@@ -39,6 +41,13 @@ void Enemy::Update(GameEngine *game, float dt)
 	position_.y = std::max(position_.y, 0);
 	position_.x = std::min(position_.x, game->GetWindowWidth() - width_);
 	position_.y = std::min(position_.y, game->GetWindowHeight() - height_);
+
+	ttl_ -= dt;
+}
+
+bool Enemy::IsDead()
+{
+	return (health_ <= 0 || ttl_ <= 0);
 }
 
 SDL_Rect Enemy::GetRect()
