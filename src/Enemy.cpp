@@ -24,28 +24,18 @@ void Enemy::Draw(GameEngine *game)
 	SDL_RenderFillRect(rend, &rect_oeilG );
 }
 
-void Enemy::Update(GameEngine *, float dt)
+void Enemy::Update(GameEngine *game, float dt)
 {
-	Vec2f cappedVel = velocity_;
-	if (velocity_.Length() > maxSpeed_)
-	{
-		cappedVel.Truncate(maxSpeed_);
-	}
-	/*
-	position_.x += (cappedVel.x * dt);
-	position_.y += (cappedVel.y * dt);
-
-	position_.x = std::max(position_.x, 0);
-	position_.y = std::max(position_.y, 0);
-	position_.x = std::min(position_.x, game->GetWindowWidth() - width_);
-	position_.y = std::min(position_.y, game->GetWindowHeight() - height_);*/
-
-	ttl_ -= dt;
+	IMovable::Update(game, dt);
+	if (health_ <= 0 || ttl_ <= 0) 
+		heDed_ = true;
+	else 
+		ttl_ -= dt;
 }
 
 bool Enemy::IsDead()
 {
-	return (health_ <= 0 || ttl_ <= 0);
+	return heDed_;
 }
 
 SDL_Rect Enemy::GetRect()

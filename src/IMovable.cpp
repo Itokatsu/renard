@@ -1,5 +1,4 @@
 #include "IMovable.h"
-#include <iostream>
 
 IMovable::IMovable()
 {

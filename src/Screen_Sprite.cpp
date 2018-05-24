@@ -19,10 +19,10 @@ void Screen_Sprite::Init(GameEngine *game)
 	thePlayer_ = new Player(game, game->GetWindowWidth() / 2 - 20, game->GetWindowHeight() - 100);
 	thePlayer_->SetSprite(game, "sprite.png");
 
-	/*for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		entities_.push_back(new Enemy(game, (1 + i) * 100, 150));
-	}*/
+	}
 
 	entities_.push_back(thePlayer_);
 

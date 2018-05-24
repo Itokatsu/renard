@@ -1,5 +1,4 @@
 #include "Sprite.h"
-#include <iostream>
 
 Sprite::Sprite(SDL_Texture *tex, int width, int height,
 			   unsigned int maxImg)
@@ -21,7 +20,6 @@ void Sprite::PlayAnim(SpriteControl *ctrl, float dt)
 		return;
 
 	ctrl->animTime += dt;
-	std::cout << ctrl->animTime << std::endl;
 	if (ctrl->animTime > ctrl->animSpeed)
 	{
 		NextAnim(ctrl);

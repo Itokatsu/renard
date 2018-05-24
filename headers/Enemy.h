@@ -26,6 +26,7 @@ class Enemy : public IEntity, public IMovable
 	int health_;
 	SDL_Color color_;
 	// time to live (ms)
+	bool  heDed_;
 	int ttl_;
 
 };
