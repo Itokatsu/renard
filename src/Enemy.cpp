@@ -1,10 +1,8 @@
 #include "Enemy.h"
 
 
-Enemy::Enemy(GameEngine *, int posX, int posY)
+Enemy::Enemy(GameEngine *, int posX, int posY) : IMovable(posX, posY)
 {
-	position_ = {posX, posY};
-	velocity_ = {.0f, .0f};
 	maxSpeed_ = 0.2;
 	health_ = 3;
 	width_ = 32;
@@ -26,21 +24,21 @@ void Enemy::Draw(GameEngine *game)
 	SDL_RenderFillRect(rend, &rect_oeilG );
 }
 
-void Enemy::Update(GameEngine *game, float dt)
+void Enemy::Update(GameEngine *, float dt)
 {
 	Vec2f cappedVel = velocity_;
 	if (velocity_.Length() > maxSpeed_)
 	{
 		cappedVel.Truncate(maxSpeed_);
 	}
-
+	/*
 	position_.x += (cappedVel.x * dt);
 	position_.y += (cappedVel.y * dt);
 
 	position_.x = std::max(position_.x, 0);
 	position_.y = std::max(position_.y, 0);
 	position_.x = std::min(position_.x, game->GetWindowWidth() - width_);
-	position_.y = std::min(position_.y, game->GetWindowHeight() - height_);
+	position_.y = std::min(position_.y, game->GetWindowHeight() - height_);*/
 
 	ttl_ -= dt;
 }
@@ -56,31 +54,6 @@ SDL_Rect Enemy::GetRect()
 	return rect;
 }
 
-SDL_Point Enemy::GetPosition()
-{
-	return position_;
-}
-
-Vec2f Enemy::GetVelocity()
-{
-	return velocity_;
-}
-
-void Enemy::SetVelocity(Vec2f v)
-{
-	velocity_ = v;
-}
-
-void Enemy::SetVelocity(float velX, float velY)
-{
-	velocity_.x = velX;
-	velocity_.y = velY;
-}
-
-void Enemy::AddVelocity(Vec2f v)
-{
-	velocity_ += v;
-}
 
 SDL_Color Enemy::GetColor()
 {

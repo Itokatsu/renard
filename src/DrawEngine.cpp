@@ -111,6 +111,25 @@ SDL_Texture *DrawEngine::LoadText(std::string text, SDL_Color color)
 	return newTexture;
 }
 
+Sprite *DrawEngine::LoadSprite(std::string imgPath, int width, int height, unsigned int numFrames)
+{
+	// Look for texture in sprites map.
+	int const pos = imgPath.find_last_of('/');
+	const std::string leaf = imgPath.substr(pos + 1);
+	if (GetSprite(leaf) != NULL)
+	{
+		// Returns it directly when found
+		return sprites_.at(leaf);
+	}
+
+	SDL_Texture *tex = LoadImage(imgPath);
+	Sprite *newSprite = new Sprite(tex, width, height, numFrames);
+
+	// Push into map.
+	sprites_[leaf] = newSprite;
+	return newSprite;
+}
+
 // Look into ressources map
 SDL_Texture *DrawEngine::GetRessource(std::string key)
 {
@@ -118,6 +137,14 @@ SDL_Texture *DrawEngine::GetRessource(std::string key)
 	if (c == 0)
 		return NULL;
 	return ressources_.at(key);
+}
+
+Sprite *DrawEngine::GetSprite(std::string key)
+{
+	int c = sprites_.count(key);
+	if (c == 0)
+		return NULL;
+	return sprites_.at(key);
 }
 
 // 	void Load(std::string className, std::string file);

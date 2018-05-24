@@ -3,11 +3,13 @@
 
 #include "SDL.h"
 #include "IEntity.h"
+#include "IMovable.h"
 #include "Vec2.h"
 #include "GameEngine.h"
 #include "Sprite.h"
+#include <string>
 
-class Player : public IEntity
+class Player : public IMovable, public IEntity
 {
   public:
 	Player(GameEngine *game);
@@ -18,18 +20,14 @@ class Player : public IEntity
 
 	bool IsDead();
 	Sprite *GetSprite();
-	SDL_Point GetPosition();
-	Vec2f GetVelocity();
-	void SetVelocity(Vec2f v);
-	void SetVelocity(float velX, float velY);
-	void AddVelocity(Vec2f v);
+	void SetSprite(Sprite *sprite);
+	void SetSprite(GameEngine *game, std::string imgPath);
+	void SetDirection(Direction d);
 	SDL_Rect GetRect();
 
   private:
 	Sprite *mySprite_;
-	SDL_Point position_;
-	Vec2f velocity_;
-	float maxSpeed_;
+	SpriteControl sprCtrl_;
 	int health_;
 };
 

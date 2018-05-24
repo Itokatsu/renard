@@ -4,6 +4,7 @@
 #include "SDL.h"
 #include "Vec2.h"
 #include "GameEngine.h"
+#include "IMovable.h"
 
 class IEntity
 {
@@ -13,7 +14,6 @@ class IEntity
 	virtual void Update(GameEngine *game, float dt) = 0;
 	virtual bool IsDead() = 0;
 
-	virtual SDL_Point GetPosition() = 0;
 };
 
 #endif

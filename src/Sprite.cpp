@@ -1,42 +1,39 @@
 #include "Sprite.h"
+#include <iostream>
 
 Sprite::Sprite(SDL_Texture *tex, int width, int height,
-			   unsigned int maxImg, float speed)
+			   unsigned int maxImg)
 {
 	texture_ = tex;
 	frameWidth_ = width;
 	frameHeight_ = height;
 	numFrames_ = maxImg;
-	animSpeed_ = speed;
-	animated_ = (maxImg > 1 && speed > 0.0);
-
-	direction_ = BAS;
-	animTime_ = 0;
-	currentFrame_ = 0;
 }
 
-void Sprite::NextAnim()
+void Sprite::NextAnim(SpriteControl *ctrl)
 {
-	currentFrame_ = (currentFrame_ + 1) % numFrames_;
+	ctrl->currentFrame = (ctrl->currentFrame + 1) % numFrames_;
 }
 
-void Sprite::PlayAnim(float dt)
+void Sprite::PlayAnim(SpriteControl *ctrl, float dt)
 {
-	if (!animated_)
+	if (!ctrl->animated)
 		return;
-	animTime_ += dt;
-	if (animTime_ > animSpeed_)
+
+	ctrl->animTime += dt;
+	std::cout << ctrl->animTime << std::endl;
+	if (ctrl->animTime > ctrl->animSpeed)
 	{
-		NextAnim();
-		animTime_ -= animSpeed_;
+		NextAnim(ctrl);
+		ctrl->animTime -= ctrl->animSpeed;
 	}
 }
 
-SDL_Rect Sprite::GetRect()
+SDL_Rect Sprite::GetRect(SpriteControl *ctrl)
 {
 	SDL_Rect rekt = {
-		currentFrame_ * frameWidth_,
-		direction_ * frameHeight_,
+		ctrl->currentFrame * frameWidth_,
+		ctrl->direction * frameHeight_,
 		frameWidth_,
 		frameHeight_};
 	return rekt;
@@ -55,14 +52,4 @@ int Sprite::GetWidth()
 int Sprite::GetHeight()
 {
 	return frameHeight_;
-}
-
-void Sprite::SetSpeed(float speed)
-{
-	animSpeed_ = speed;
-}
-
-void Sprite::SetDirection(Direction d)
-{
-	direction_ = d;
 }
