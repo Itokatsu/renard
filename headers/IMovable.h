@@ -8,14 +8,13 @@
 class IMovable
 {
   public:
-	IMovable();
 	IMovable(int posX, int posY);
 	IMovable(Vec2f pos);
 	IMovable(SDL_Point pos);
 
 	void Update(GameEngine *game, float dt);
 
-	virtual SDL_Rect GetRect() =  0;
+	virtual SDL_Rect GetRect() = 0;
 
 	// Position related
 	SDL_Point GetPosition();
@@ -37,10 +36,11 @@ class IMovable
 	void SetAcceleration(Vec2f acceleration);
 
   protected:
-	SDL_Point position_; //vec2f vs SDL_Point ?
-	Vec2f velocity_;
-	Vec2f accel_;
-	float maxSpeed_;
+	SDL_Point position_ = {0, 0}; //vec2f vs SDL_Point ?
+	Vec2f velocity_ = {0.f, 0.f};
+	Vec2f accel_ = {0.f, 0.f};
+	float maxSpeed_ = 1;
+	bool freeBird = false;
 };
 
 #endif

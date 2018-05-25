@@ -23,14 +23,14 @@ void Player::Draw(GameEngine *game)
 
 void Player::Update(GameEngine *game, float dt)
 {
-	if (velocity_.x != 0 ||velocity_.y != 0)
+	if (velocity_.x != 0 || velocity_.y != 0)
 	{
 		mySprite_->PlayAnim(&sprCtrl_, dt);
 	}
 	IMovable::Update(game, dt);
 }
 
-bool Player::IsDead() 
+bool Player::IsDead()
 {
 	return (health_ <= 0);
 }
@@ -40,12 +40,12 @@ Sprite *Player::GetSprite()
 	return mySprite_;
 }
 
-void Player::SetSprite(Sprite* sprite)
+void Player::SetSprite(Sprite *sprite)
 {
 	mySprite_ = sprite;
 }
 
-void Player::SetSprite(GameEngine *game, std::string imgPath) 
+void Player::SetSprite(GameEngine *game, std::string imgPath)
 {
 	mySprite_ = game->GetDrawEngine()->GetSprite(imgPath);
 }
@@ -57,11 +57,10 @@ void Player::SetDirection(Direction d)
 
 SDL_Rect Player::GetRect()
 {
-	SDL_Rect rect = {	
+	SDL_Rect rect = {
 		position_.x,
 		position_.y,
-		mySprite_->GetWidth(), 
-		mySprite_->GetHeight()
-	};
+		mySprite_->GetWidth(),
+		mySprite_->GetHeight()};
 	return rect;
 }

@@ -31,7 +31,7 @@ void Screen_Sprite::Init(GameEngine *game)
 
 void Screen_Sprite::Cleanup()
 {
-	//entities_.clear();
+	entities_.clear();
 	std::cout << "[Sprite Screen Quit]" << std::endl;
 }
 

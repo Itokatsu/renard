@@ -28,7 +28,6 @@ class Screen_Sprite : public IGameScreen
 	static Screen_Sprite myScreen_;
 	std::vector<IEntity*> entities_;
 	Player *thePlayer_;
-	std::vector<Enemy*> enemies_;
 };
 
 #endif

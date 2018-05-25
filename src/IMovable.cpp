@@ -1,25 +1,13 @@
 #include "IMovable.h"
 
-IMovable::IMovable()
-{
-	position_ = {0, 0};
-	velocity_ = {0.f, 0.f};
-	accel_ = {0.f, 0.f};
-	maxSpeed_ = .5f;
-}
-
 IMovable::IMovable(Vec2f pos)
 {
 	position_ = pos.ToSDLPoint();
-	velocity_ = {0.f, 0.f};
-	maxSpeed_ = .5f;
 }
 
 IMovable::IMovable(int x, int y)
 {
 	position_ = {x, y};
-	velocity_ = {0.f, 0.f};
-	maxSpeed_ = .5f;
 }
 
 SDL_Point IMovable::GetPosition()
@@ -98,20 +86,17 @@ void IMovable::Update(GameEngine *game, float dt)
 	{
 		cappedVel.Truncate(maxSpeed_);
 	}
-
 	position_.x += (cappedVel.x * dt);
 	position_.y += (cappedVel.y * dt);
 
-	SDL_Rect rect = GetRect();
-	position_.x = std::max(position_.x, 0);
-	position_.y = std::max(position_.y, 0);
-	position_.x = std::min(position_.x, game->GetWindowWidth() - rect.w);
-	position_.y = std::min(position_.y, game->GetWindowHeight() - rect.h);
-}
-
-SDL_Rect IMovable::GetRect() {
-	SDL_Rect empty = {0, 0, 0, 0};
-	return empty;
+	// Check with window boundaries.
+	if (!freeBird) {
+		SDL_Rect rect = GetRect();
+		position_.x = std::max(position_.x, 0);
+		position_.y = std::max(position_.y, 0);
+		position_.x = std::min(position_.x, game->GetWindowWidth() - rect.w);
+		position_.y = std::min(position_.y, game->GetWindowHeight() - rect.h);
+	}
 }
 
 /*

@@ -10,10 +10,11 @@ GraphicEngine::GraphicEngine()
 	renderer_ = NULL;
 }
 
+// SDL Initialization, Window Creation, Renderer Creation
 bool GraphicEngine::Init(int width, int height)
 {
 	bool success = true;
-	//Initialize SDL
+	// Initialize SDL
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		std::cerr << "SDL could not initialize! SDL_Error:" << SDL_GetError() << std::endl;
@@ -26,7 +27,7 @@ bool GraphicEngine::Init(int width, int height)
 			std::cerr << "Warning: Linear texture filtering not enabled!" << std::endl;
 			success = false;
 		}
-		//Create window
+		// Create window
 		window_ = SDL_CreateWindow("Game of the year : Hobo Edition", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 								  width, height, SDL_WINDOW_SHOWN);
 		if (window_ == NULL)
@@ -37,18 +38,19 @@ bool GraphicEngine::Init(int width, int height)
 		else
 		{
 			initialized_ = true;
-			// for surface usage
-			// screenSurface = SDL_GetWindowSurface(window);
-
-			// creating renderer (texture usage)
+			
+			// Create renderer (texture usage)
 			renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-			// renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED);
+
+			// Set alpha blending
 			SDL_SetRenderDrawBlendMode(renderer_, SDL_BLENDMODE_BLEND);
 			if (renderer_ == NULL)
 			{
 				std::cerr << "Renderer could not be created! SDL Error: " << SDL_GetError() << std::endl;
 				success = false;
 			}
+
+			// Clear
 			SDL_SetRenderDrawColor(renderer_, 0xFF, 0xFF, 0xFF, 0xFF);
 			SDL_RenderClear(renderer_);
 		}

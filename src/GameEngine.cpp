@@ -72,49 +72,52 @@ void GameEngine::Cleanup()
 	gfx_ = NULL;
 }
 
+// Change the screen on top of the stack
 void GameEngine::ChangeScreen(IGameScreen *screen)
 {
-	//quit current Screen
 	if (!screens_.empty())
 	{
+		// exit and remove current Screen
 		screens_.back()->Cleanup();
 		screens_.pop_back();
 	}
 
-	//add new screen
+	// start new screen
 	screens_.push_back(screen);
 	screens_.back()->Init(this);
 }
 
+// Add a screen on top of the stack
 void GameEngine::PushScreen(IGameScreen *screen)
 {
-	//pause current screen
+	// pause current screen
 	if (!screen->RunBG())
 	{
 		screens_.back()->Pause();
 	}
 
-	//start new top screen
+	// start new screen
 	screens_.push_back(screen);
 	screens_.back()->Init(this);
 }
 
+// Remove the screen on top of the stack
 void GameEngine::PopScreen()
 {
-	//remove current screen
+	// remove current screen
 	if (!screens_.empty())
 	{
 		screens_.back()->Cleanup();
 		screens_.pop_back();
 	}
 
-	//resume previous screen
+	// resume previous screen
 	if (!screens_.empty() && screens_.back()->IsPaused())
 	{
 		screens_.back()->Unpause();
 	}
 
-	//no screen > exit game
+	// exit game if there is no screen left
 	if (screens_.empty())
 	{
 		this->Quit();
@@ -172,6 +175,7 @@ void GameEngine::Draw()
 	SDL_SetRenderDrawColor(gfx_->GetRenderer(), 0x2A, 0x2A, 0x34, 0xFF);
 	SDL_RenderClear(gfx_->GetRenderer());
 
+	/* @TODO: refacto */
 	unsigned int idx = screens_.size() - 1; // Top of the stack
 	// Find highest screen in the stack not accepting screens displaying in the background
 	while (screens_.at(idx)->DisplayBG())
@@ -195,7 +199,8 @@ void GameEngine::Draw()
 
 void GameEngine::Quit()
 {
-	running_ = false; // Will quit the main loop
+	// Will quit the main loop
+	running_ = false;
 }
 
 bool GameEngine::IsRunning()
@@ -203,26 +208,31 @@ bool GameEngine::IsRunning()
 	return running_;
 }
 
+// Application window height
 int GameEngine::GetWindowHeight()
 {
 	return windowHeight_;
 }
 
+// Application window width
 int GameEngine::GetWindowWidth()
 {
 	return windowWidth_;
 }
 
+// Used for rendering stuff
 GraphicEngine *GameEngine::GetGraphicEngine()
 {
 	return gfx_;
 }
 
+// Used to load and manage images
 DrawEngine *GameEngine::GetDrawEngine()
 {
 	return drawer_;
 }
 
+// Does what you expect
 SoundEngine *GameEngine::GetSoundEngine()
 {
 	return sound_;
