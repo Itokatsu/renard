@@ -12,7 +12,6 @@ class IGameScreen;
 class GameEngine
 {
   public:
-	// Load and Init Graphic Engines
 	bool Init(int width, int height);
 	// Destroy Engines and clean screens stacks
 	void Cleanup();
@@ -41,11 +40,7 @@ class GameEngine
   private:
 	// stack of Screens
 	std::vector<IGameScreen *> screens_;
-	// Screens to display
-	std::vector<IGameScreen *> screenDisplay_;
-	// Screens to update
-	std::vector<IGameScreen *> screenRun_;
-
+	
 	int windowWidth_;
 	int windowHeight_;
 

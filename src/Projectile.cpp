@@ -2,7 +2,7 @@
 #include <iostream>
 #include <algorithm>
 
-Projectile::Projectile(GameEngine *game, Player *pl)
+Projectile::Projectile(GameEngine *, Player *pl) : IMovable()
 {
 	// SDL_Texture *tex = game->GetDrawEngine()->GetRessource("sprite.png");
 	// mySprite_ = new Sprite(tex, 96 / 3, 128 / 4, 3, 100);
@@ -12,18 +12,9 @@ Projectile::Projectile(GameEngine *game, Player *pl)
 	position_.y += -2;
 	velocity_ = {.0f, -.5f};
 	maxSpeed_ = 0.5;
-}
-
-bool Projectile::IsDead()
-{
-	// Need game !
-	// if (position_.x + 6 < 0 || position_.x > game->GetWindowWidth() || position_.y + 20 < 0 || position_.y > game->GetWindowHeight())
-	if (position_.x + 6 < 0 || position_.x > 640 || position_.y + 20 < 0 || position_.y > 480)
-	{
-		return true;
-	}
-	else
-		return false;
+	width_ = 6;
+	height_ = 20;
+	freeBird_ = true;
 }
 
 void Projectile::Draw(GameEngine *game)
@@ -38,49 +29,17 @@ void Projectile::Draw(GameEngine *game)
 
 void Projectile::Update(GameEngine *game, float dt)
 {
-	Vec2f cappedVel = velocity_;
-	if (velocity_.Length() > maxSpeed_)
-	{
-		cappedVel.Truncate(maxSpeed_);
+	IMovable::Update(game, dt);
+	const SDL_Rect windowRect = {0, 0, game->GetWindowWidth(), game->GetWindowHeight()};
+	const SDL_Rect projRect = GetRect();
+	SDL_Rect intersection;
+	// false if no intersection
+	if (!SDL_IntersectRect(&projRect, &windowRect, &intersection)) {
+		alive_ = false;
 	}
-
-	position_.x += (cappedVel.x * dt);
-	position_.y += (cappedVel.y * dt);
 }
 
 // Sprite *Projectile::GetSprite()
 // {
 // 	return mySprite_;
 // }
-
-SDL_Rect Projectile::GetRect()
-{
-	SDL_Rect rect = {position_.x, position_.y, 6, 20};
-	return rect;
-}
-
-SDL_Point Projectile::GetPosition()
-{
-	return position_;
-}
-
-Vec2f Projectile::GetVelocity()
-{
-	return velocity_;
-}
-
-void Projectile::SetVelocity(Vec2f v)
-{
-	velocity_ = v;
-}
-
-void Projectile::SetVelocity(float velX, float velY)
-{
-	velocity_.x = velX;
-	velocity_.y = velY;
-}
-
-void Projectile::AddVelocity(Vec2f v)
-{
-	velocity_ += v;
-}

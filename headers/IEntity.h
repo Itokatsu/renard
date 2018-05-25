@@ -8,12 +8,26 @@
 class IEntity
 {
   public:
-
 	virtual void Draw(GameEngine *game) = 0;
 	virtual void Update(GameEngine *game, float dt) = 0;
-	virtual bool IsDead() = 0;
+	SDL_Point GetPosition()
+	{
+		return position_;
+	};
+	virtual SDL_Rect GetRect()
+	{
+		return {position_.x, position_.y, width_, height_};
+	};
+	virtual bool IsDead()
+	{
+		return !alive_;
+	};
 
-	virtual SDL_Point GetPosition() = 0;
+  protected:
+	SDL_Point position_ = {0, 0}; //vec2f vs SDL_Point ?
+	int width_ = 0;
+	int height_ = 0;
+	bool alive_ = true;
 };
 
 #endif

@@ -1,5 +1,4 @@
 #include "IGameScreen.h"
-#include <iostream>
 
 void IGameScreen::Pause()
 {

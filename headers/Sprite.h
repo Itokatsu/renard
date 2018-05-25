@@ -3,6 +3,23 @@
 
 #include "SDL.h"
 
+enum Direction
+{
+	BAS,
+	GAUCHE,
+	DROITE,
+	HAUT
+};
+
+struct SpriteControl {
+	bool animated = true;
+	Direction direction = Direction::BAS;
+	float animSpeed = 100;
+
+	int currentFrame = 0;
+	int animTime = 0;
+};
+
 class Sprite
 {
   public:
@@ -15,21 +32,17 @@ class Sprite
 	};
 
 	Sprite(SDL_Texture *tex, int width, int height,
-		   unsigned int maxImg, float speed);
-	void NextAnim();
-	void PlayAnim(float dt);
+		   unsigned int maxImg);
+	void NextAnim(SpriteControl *ctrl);
+	void PlayAnim(SpriteControl *ctrl, float dt);
 
-	SDL_Rect GetRect();
+	SDL_Rect GetRect(SpriteControl *ctrl);
 	SDL_Texture *GetTexture();
 	int GetWidth();
 	int GetHeight();
 
-	void SetSpeed(float speed);
-	void SetDirection(Direction d);
-
   private:
 	SDL_Texture *texture_;
-	bool animated_;
 	int frameWidth_;
 	int frameHeight_;
 	//Number of animation frames

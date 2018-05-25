@@ -8,14 +8,14 @@
 
 Screen_Sprite Screen_Sprite::myScreen_;
 
-Screen_Sprite::Screen_Sprite()
-{
-}
+Screen_Sprite::Screen_Sprite() {}
 
 void Screen_Sprite::Init(GameEngine *game)
 {
-	game->GetDrawEngine()->LoadImage("media/img/sprite.png");
+	game->GetDrawEngine()->LoadSprite("media/img/sprite.png", 96 / 3, 128 / 4, 3);
+	
 	thePlayer_ = new Player(game, game->GetWindowWidth() / 2 - 20, game->GetWindowHeight() - 100);
+	thePlayer_->SetSprite(game, "sprite.png");
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -29,7 +29,7 @@ void Screen_Sprite::Init(GameEngine *game)
 
 void Screen_Sprite::Cleanup()
 {
-	//entities_.clear();
+	// entities_.clear();
 	std::cout << "[Sprite Screen Quit]" << std::endl;
 }
 
@@ -68,14 +68,14 @@ void Screen_Sprite::HandleEvents(GameEngine *game)
 	SDL_Event e;
 	while (SDL_PollEvent(&e) != 0)
 	{
-		//Close window
+		// Close window
 		if (e.type == SDL_QUIT)
 		{
 			game->Quit();
 		}
 		else
 		{
-			// Key press
+			// Key pressed
 			if (e.type == SDL_KEYDOWN && e.key.repeat == 0)
 			{
 				switch (e.key.keysym.sym)
@@ -89,19 +89,19 @@ void Screen_Sprite::HandleEvents(GameEngine *game)
 					break;
 				// directions
 				case SDLK_UP:
-					thePlayer_->GetSprite()->SetDirection(Sprite::Direction::HAUT);
+					thePlayer_->SetDirection(Direction::HAUT);
 					thePlayer_->AddVelocity({0, -1});
 					break;
 				case SDLK_DOWN:
-					thePlayer_->GetSprite()->SetDirection(Sprite::Direction::BAS);
+					thePlayer_->SetDirection(Direction::BAS);
 					thePlayer_->AddVelocity({0, 1});
 					break;
 				case SDLK_RIGHT:
-					thePlayer_->GetSprite()->SetDirection(Sprite::Direction::DROITE);
+					thePlayer_->SetDirection(Direction::DROITE);
 					thePlayer_->AddVelocity({1, 0});
 					break;
 				case SDLK_LEFT:
-					thePlayer_->GetSprite()->SetDirection(Sprite::Direction::GAUCHE);
+					thePlayer_->SetDirection(Direction::GAUCHE);
 					thePlayer_->AddVelocity({-1, 0});
 					break;				
 				case SDLK_x:
@@ -109,6 +109,7 @@ void Screen_Sprite::HandleEvents(GameEngine *game)
 					break;
 				}
 			}
+			// Key released
 			else if (e.type == SDL_KEYUP)
 			{
 				switch (e.key.keysym.sym)
