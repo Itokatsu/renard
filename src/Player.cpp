@@ -104,3 +104,8 @@ void Player::AddVelocity(Vec2f v)
 {
 	velocity_ += v;
 }
+
+void Player::Shoot(GameEngine *game, std::vector<IEntity*> *entities)
+{
+	(*entities).push_back(new Projectile(game, this));
+}

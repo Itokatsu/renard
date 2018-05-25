@@ -103,6 +103,9 @@ void Screen_Sprite::HandleEvents(GameEngine *game)
 				case SDLK_LEFT:
 					thePlayer_->GetSprite()->SetDirection(Sprite::Direction::GAUCHE);
 					thePlayer_->AddVelocity({-1, 0});
+					break;				
+				case SDLK_x:
+					thePlayer_->Shoot(game, &entities_);
 					break;
 				}
 			}

@@ -1,40 +1,38 @@
-#ifndef DEF_PLAYER
-#define DEF_PLAYER
+#ifndef DEF_PROJECTILE
+#define DEF_PROJECTILE
 
 #include "SDL.h"
-#include "IEntity.h"
 #include "Vec2.h"
 #include "GameEngine.h"
 #include "Sprite.h"
-#include "Projectile.h"
+#include "Player.h"
+#include "IEntity.h"
 
-// class Projectile : public IEntity;
+class Player;
 
-class Player : public IEntity
+class Projectile : public IEntity
 {
   public:
-	Player(GameEngine *game);
-	Player(GameEngine *game, int posX, int posY);
+	Projectile(GameEngine *game, Player *pl);
 
+	bool IsDead();
 	void Draw(GameEngine *game);
 	void Update(GameEngine *game, float dt);
 
-	bool IsDead();
-	Sprite *GetSprite();
+	// Sprite *GetSprite();
 	SDL_Point GetPosition();
 	Vec2f GetVelocity();
 	void SetVelocity(Vec2f v);
 	void SetVelocity(float velX, float velY);
 	void AddVelocity(Vec2f v);
 	SDL_Rect GetRect();
-	void Shoot(GameEngine *game, std::vector<IEntity*> *entities);
 
   private:
-	Sprite *mySprite_;
+    Player *owner_;
+	// Sprite *mySprite_;
 	SDL_Point position_;
 	Vec2f velocity_;
 	float maxSpeed_;
-	int health_;
 };
 
 #endif

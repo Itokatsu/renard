@@ -5,6 +5,7 @@
 #include "IEntity.h"
 #include "Enemy.h"
 #include "Player.h"
+#include "Projectile.h"
 class Screen_Sprite : public IGameScreen
 {
 
@@ -29,6 +30,7 @@ class Screen_Sprite : public IGameScreen
 	std::vector<IEntity*> entities_;
 	Player *thePlayer_;
 	std::vector<Enemy*> enemies_;
+	std::vector<Projectile*> projectiles_;
 };
 
 #endif
