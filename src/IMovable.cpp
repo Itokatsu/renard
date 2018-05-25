@@ -1,5 +1,7 @@
 #include "IMovable.h"
 
+IMovable::IMovable() {}
+
 IMovable::IMovable(Vec2f pos)
 {
 	position_ = pos.ToSDLPoint();
@@ -8,11 +10,6 @@ IMovable::IMovable(Vec2f pos)
 IMovable::IMovable(int x, int y)
 {
 	position_ = {x, y};
-}
-
-SDL_Point IMovable::GetPosition()
-{
-	return position_;
 }
 
 Vec2f IMovable::GetVelocity()
@@ -86,11 +83,14 @@ void IMovable::Update(GameEngine *game, float dt)
 	{
 		cappedVel.Truncate(maxSpeed_);
 	}
+	
+	// SetPosition (cappedVel * dt + position_)
 	position_.x += (cappedVel.x * dt);
 	position_.y += (cappedVel.y * dt);
 
 	// Check with window boundaries.
-	if (!freeBird) {
+	if (!freeBird_)
+	{
 		SDL_Rect rect = GetRect();
 		position_.x = std::max(position_.x, 0);
 		position_.y = std::max(position_.y, 0);

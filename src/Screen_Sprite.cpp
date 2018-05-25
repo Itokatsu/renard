@@ -8,9 +8,7 @@
 
 Screen_Sprite Screen_Sprite::myScreen_;
 
-Screen_Sprite::Screen_Sprite()
-{
-}
+Screen_Sprite::Screen_Sprite() {}
 
 void Screen_Sprite::Init(GameEngine *game)
 {
@@ -31,7 +29,7 @@ void Screen_Sprite::Init(GameEngine *game)
 
 void Screen_Sprite::Cleanup()
 {
-	entities_.clear();
+	// entities_.clear();
 	std::cout << "[Sprite Screen Quit]" << std::endl;
 }
 
@@ -70,14 +68,14 @@ void Screen_Sprite::HandleEvents(GameEngine *game)
 	SDL_Event e;
 	while (SDL_PollEvent(&e) != 0)
 	{
-		//Close window
+		// Close window
 		if (e.type == SDL_QUIT)
 		{
 			game->Quit();
 		}
 		else
 		{
-			// Key press
+			// Key pressed
 			if (e.type == SDL_KEYDOWN && e.key.repeat == 0)
 			{
 				switch (e.key.keysym.sym)
@@ -108,6 +106,7 @@ void Screen_Sprite::HandleEvents(GameEngine *game)
 					break;
 				}
 			}
+			// Key released
 			else if (e.type == SDL_KEYUP)
 			{
 				switch (e.key.keysym.sym)

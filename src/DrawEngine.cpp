@@ -146,5 +146,3 @@ Sprite *DrawEngine::GetSprite(std::string key)
 		return NULL;
 	return sprites_.at(key);
 }
-
-// 	void Load(std::string className, std::string file);

@@ -20,13 +20,9 @@ void Screen_Pause::Cleanup()
 	std::cout << "[Pause Screen Quit]" << std::endl;
 }
 
-void Screen_Pause::Pause()
-{
-}
+void Screen_Pause::Pause() {}
 
-void Screen_Pause::Unpause()
-{
-}
+void Screen_Pause::Unpause() {}
 
 void Screen_Pause::HandleEvents(GameEngine *game)
 {
@@ -52,9 +48,7 @@ void Screen_Pause::HandleEvents(GameEngine *game)
 	}
 }
 
-void Screen_Pause::Update(GameEngine *, float)
-{
-}
+void Screen_Pause::Update(GameEngine *, float) {}
 
 void Screen_Pause::Draw(GameEngine *game)
 {

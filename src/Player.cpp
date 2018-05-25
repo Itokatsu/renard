@@ -23,16 +23,15 @@ void Player::Draw(GameEngine *game)
 
 void Player::Update(GameEngine *game, float dt)
 {
+	IMovable::Update(game, dt);
+	if (health_ <= 0) 
+	{
+		alive_ = false;
+	}
 	if (velocity_.x != 0 || velocity_.y != 0)
 	{
 		mySprite_->PlayAnim(&sprCtrl_, dt);
 	}
-	IMovable::Update(game, dt);
-}
-
-bool Player::IsDead()
-{
-	return (health_ <= 0);
 }
 
 Sprite *Player::GetSprite()

@@ -9,7 +9,7 @@
 #include "Sprite.h"
 #include <string>
 
-class Player : public IMovable, public IEntity
+class Player : public IMovable
 {
   public:
 	Player(GameEngine *game);
@@ -18,7 +18,6 @@ class Player : public IMovable, public IEntity
 	void Draw(GameEngine *game);
 	void Update(GameEngine *game, float dt);
 
-	bool IsDead();
 	Sprite *GetSprite();
 	void SetSprite(Sprite *sprite);
 	void SetSprite(GameEngine *game, std::string imgPath);

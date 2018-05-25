@@ -140,7 +140,7 @@ void GameEngine::Update()
 	dTime = diff;
 	// Outputs FPS every second
 	if (fpsTimer_.GetTime() >= 1000)
-	{ //1sec passed
+	{ // 1sec passed
 		std::cout << "FPS : " << framesThisSec_ << std::endl;
 		// Reset counter
 		fpsTimer_.Reset();
