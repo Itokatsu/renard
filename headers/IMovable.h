@@ -8,33 +8,33 @@ class IMovable : public virtual IEntity
 {
   public:
 	IMovable();
-	IMovable(int posX, int posY);
-	IMovable(Vec2f pos);
+	IMovable(double posX, double posY);
+	IMovable(Vec2d pos);
 	IMovable(SDL_Point pos);
 
-	void Update(GameEngine *game, float dt);
+	void Update(GameEngine *game, double dt);
 
 	// Position related
-	void SetPosition(int x, int y);
-	void SetPosition(Vec2f pos);
+	void SetPosition(double x, double y);
+	void SetPosition(Vec2d pos);
 	void SetPosition(SDL_Point p);
 
 	// Velocity related
-	Vec2f GetVelocity();
-	void SetVelocity(Vec2f v);
-	void SetVelocity(float velX, float velY);
+	Vec2d GetVelocity();
+	void SetVelocity(Vec2d v);
+	void SetVelocity(double velX, double velY);
 	// Operation on velocity
-	void AddVelocity(Vec2f v);
-	void AddVelocity(float velX, float velY);
+	void AddVelocity(Vec2d v);
+	void AddVelocity(double velX, double velY);
 	void MulVelocity(double m);
 
 	// Acceleration related
-	Vec2f GetAcceleration();
-	void SetAcceleration(Vec2f acceleration);
+	Vec2d GetAcceleration();
+	void SetAcceleration(Vec2d acceleration);
 
   protected:
-	Vec2f velocity_ = {0.f, 0.f};
-	Vec2f accel_ = {0.f, 0.f};
+	Vec2d velocity_ = {0, 0};
+	Vec2d accel_ = {0, 0};
 	float maxSpeed_ = 1;
 	// Can escape window boundaries
 	bool freeBird_ = false;

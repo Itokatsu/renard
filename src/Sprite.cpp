@@ -14,7 +14,7 @@ void Sprite::NextAnim(SpriteControl *ctrl)
 	ctrl->currentFrame = (ctrl->currentFrame + 1) % numFrames_;
 }
 
-void Sprite::PlayAnim(SpriteControl *ctrl, float dt)
+void Sprite::PlayAnim(SpriteControl *ctrl, double dt)
 {
 	if (!ctrl->animated)
 		return;

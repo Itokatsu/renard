@@ -12,20 +12,32 @@ class IGameScreen
 	virtual void Cleanup() = 0;
 
 	// Halts updates of the screen
-	virtual void Pause();
+	virtual void Pause() {
+		if (!paused_)
+			paused_ = true;
+	}
 	// Resumes the screen updates
-	virtual void Unpause();
+	virtual void Unpause() {
+		if (paused_)
+			paused_ = false;
+	}
 
 	// Handles things like user inputs
 	virtual void HandleEvents(GameEngine *) = 0;
 	// Goes to next frame
-	virtual void Update(GameEngine *, float) = 0;
+	virtual void Update(GameEngine *, double) = 0;
 	// Draw the screen
 	virtual void Draw(GameEngine *) = 0;
 
-	bool IsPaused();
-	bool RunBG();
-	bool DisplayBG();
+	bool IsPaused() {
+		return paused_;
+	}
+	bool RunBG() {
+		return allowRunningBG_;
+	}
+	bool DisplayBG() {
+		return displayBG_;
+	}
 
   protected:
 	bool paused_ = false;

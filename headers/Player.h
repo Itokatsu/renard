@@ -8,10 +8,10 @@
 class Player : public IHasSprite, public IMovable
 {
   public:
-	Player(GameEngine *game);
-	Player(GameEngine *game, int posX, int posY);
+	Player();
+	Player(double posX, double posY);
 
-	void Update(GameEngine *game, float dt);
+	void Update(GameEngine *game, double dt);
 	void Shoot(GameEngine *game, std::vector<IEntity*> *entities);
 
   private:

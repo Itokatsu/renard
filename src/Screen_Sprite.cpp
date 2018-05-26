@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Screen_Pause.h"
+#include "EnemyWave.h"
 
 Screen_Sprite Screen_Sprite::myScreen_;
 
@@ -14,13 +15,15 @@ void Screen_Sprite::Init(GameEngine *game)
 {
 	game->GetDrawEngine()->LoadSprite("media/img/sprite.png", 96 / 3, 128 / 4, 3);
 	
-	thePlayer_ = new Player(game, game->GetWindowWidth() / 2 - 20, game->GetWindowHeight() - 100);
+	thePlayer_ = new Player(game->GetWindowWidth() / 2 - 20, game->GetWindowHeight() - 100);
 	thePlayer_->SetSprite(game, "sprite.png");
 
-	for (int i = 0; i < 5; i++)
+	/*for (int i = 0; i < 5; i++)
 	{
-		entities_.push_back(new Enemy(game, (1 + i) * 100, 150));
-	}
+		entities_.push_back(new Enemy((1 + i) * 100, 150));
+	}*/
+	
+	wave_ = new EnemyWave(6);
 
 	entities_.push_back(thePlayer_);
 
@@ -41,25 +44,25 @@ void Screen_Sprite::Pause()
 void Screen_Sprite::Unpause()
 {
 	IGameScreen::Unpause();
-	thePlayer_->SetVelocity({0.f, 0.f});
+	thePlayer_->SetVelocity({0., 0.});
 	float baseSpd = 1;
 	//SDL_PumpEvents();
 	const Uint8 *keyStates = SDL_GetKeyboardState(NULL);
 	if (keyStates[SDL_SCANCODE_UP])
 	{
-		thePlayer_->AddVelocity({0.f, -baseSpd});
+		thePlayer_->AddVelocity({0., -baseSpd});
 	}
 	if (keyStates[SDL_SCANCODE_DOWN])
 	{
-		thePlayer_->AddVelocity({0.f, baseSpd});
+		thePlayer_->AddVelocity({0., baseSpd});
 	}
 	if (keyStates[SDL_SCANCODE_LEFT])
 	{
-		thePlayer_->AddVelocity({-baseSpd, 0.f});
+		thePlayer_->AddVelocity({-baseSpd, 0.});
 	}
 	if (keyStates[SDL_SCANCODE_RIGHT])
 	{
-		thePlayer_->AddVelocity({baseSpd, 0.f});
+		thePlayer_->AddVelocity({baseSpd, 0.});
 	}
 }
 
@@ -136,13 +139,14 @@ void Screen_Sprite::HandleEvents(GameEngine *game)
 	}
 }
 
-void Screen_Sprite::Update(GameEngine *game, float dt)
+void Screen_Sprite::Update(GameEngine *game, double dt)
 {
 	for (auto &e : entities_)
 	{
 		if (!e->IsDead())
 			e->Update(game, dt);
 	}
+	wave_->Update(game, dt);
 }
 
 void Screen_Sprite::Draw(GameEngine *game)
@@ -152,6 +156,7 @@ void Screen_Sprite::Draw(GameEngine *game)
 		if (!e->IsDead())
 			e->Draw(game);
 	}
+	wave_->Draw(game);
 }
 
 Screen_Sprite *Screen_Sprite::Instance()

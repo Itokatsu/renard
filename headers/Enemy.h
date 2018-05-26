@@ -8,10 +8,11 @@
 class Enemy : public IMovable
 {
   public:
-	Enemy(GameEngine *, int posX, int posY);
+	Enemy(double posX, double posY);
+	Enemy(Vec2d pos);
 
 	void Draw(GameEngine *game);
-	void Update(GameEngine *game, float dt);
+	void Update(GameEngine *game, double dt);
 
 	SDL_Color GetColor();
 

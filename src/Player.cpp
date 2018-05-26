@@ -1,17 +1,17 @@
 #include "Player.h"
 #include "Projectile.h"
 
-Player::Player(GameEngine *) : IMovable()
+Player::Player() : IMovable()
 {
 	health_ = 10;
 }
 
-Player::Player(GameEngine *, int posX, int posY) : IMovable(posX, posY)
+Player::Player(double posX, double posY) : IMovable(posX, posY)
 {
 	health_ = 10;
 }
 
-void Player::Update(GameEngine *game, float dt)
+void Player::Update(GameEngine *game, double dt)
 {
 	IMovable::Update(game, dt);
 	if (health_ <= 0) 

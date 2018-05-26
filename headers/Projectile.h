@@ -12,7 +12,7 @@ class Projectile : public IMovable
 	Projectile(GameEngine *game, Player *pl);
 
 	void Draw(GameEngine *game);
-	void Update(GameEngine *game, float dt);
+	void Update(GameEngine *game, double dt);
 
   private:
     Player *owner_;

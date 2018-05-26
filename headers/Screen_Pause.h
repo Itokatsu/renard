@@ -13,7 +13,7 @@ class Screen_Pause : public IGameScreen
 	void Unpause();
 
 	void HandleEvents(GameEngine *game);
-	void Update(GameEngine *, float dt);
+	void Update(GameEngine *, double dt);
 	void Draw(GameEngine *game);
 
 	static Screen_Pause *Instance();

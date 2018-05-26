@@ -4,6 +4,7 @@
 #include "IGameScreen.h"
 #include "IEntity.h"
 #include "Player.h"
+#include "EnemyWave.h"
 
 class Screen_Sprite : public IGameScreen
 {
@@ -16,7 +17,7 @@ class Screen_Sprite : public IGameScreen
 	void Unpause();
 
 	void HandleEvents(GameEngine *);
-	void Update(GameEngine *, float);
+	void Update(GameEngine *, double);
 	void Draw(GameEngine *);
 
 	static Screen_Sprite *Instance();
@@ -28,6 +29,7 @@ class Screen_Sprite : public IGameScreen
 	static Screen_Sprite myScreen_;
 	std::vector<IEntity*> entities_;
 	Player *thePlayer_;
+	EnemyWave* wave_;
 };
 
 #endif

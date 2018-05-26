@@ -13,7 +13,7 @@ class Screen_Test : public IGameScreen
 	void Unpause();
 
 	void HandleEvents(GameEngine *game);
-	void Update(GameEngine *game, float dT);
+	void Update(GameEngine *game, double dT);
 	void Draw(GameEngine *game);
 
 	static Screen_Test *Instance();

@@ -12,9 +12,10 @@ void IHasSprite::Draw(GameEngine *game)
 
 SDL_Rect IHasSprite::GetRect()
 {
+	SDL_Point pos = position_.ToSDLPoint();
 	return {
-		position_.x,
-		position_.y,
+		pos.x,
+		pos.y,
 		mySprite_->GetWidth(),
 		mySprite_->GetHeight()};
 }

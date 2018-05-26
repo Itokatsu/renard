@@ -74,7 +74,7 @@ void Screen_Test::HandleEvents(GameEngine *game)
 	}
 }
 
-void Screen_Test::Update(GameEngine *, float)
+void Screen_Test::Update(GameEngine *, double)
 {
 }
 

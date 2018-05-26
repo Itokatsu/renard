@@ -48,7 +48,7 @@ void Screen_Pause::HandleEvents(GameEngine *game)
 	}
 }
 
-void Screen_Pause::Update(GameEngine *, float) {}
+void Screen_Pause::Update(GameEngine *, double) {}
 
 void Screen_Pause::Draw(GameEngine *game)
 {

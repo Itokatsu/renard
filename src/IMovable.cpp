@@ -2,22 +2,22 @@
 
 IMovable::IMovable() {}
 
-IMovable::IMovable(Vec2f pos)
+IMovable::IMovable(Vec2d pos)
 {
-	position_ = pos.ToSDLPoint();
+	position_ = pos;
 }
 
-IMovable::IMovable(int x, int y)
+IMovable::IMovable(double x, double y)
 {
 	position_ = {x, y};
 }
 
-Vec2f IMovable::GetVelocity()
+Vec2d IMovable::GetVelocity()
 {
 	return velocity_;
 }
 
-Vec2f IMovable::GetAcceleration()
+Vec2d IMovable::GetAcceleration()
 {
 	return accel_;
 }
@@ -26,42 +26,43 @@ Vec2f IMovable::GetAcceleration()
 //==  ALWAYS USE THIS FOR CHANGING POSITION_ ===
 //=============================================
 
-void IMovable::SetPosition(int x, int y)
+void IMovable::SetPosition(double x, double y)
 {
 	position_.x = x;
 	position_.y = y;
 	// UpdateCollisionBox();
 }
 
-void IMovable::SetPosition(Vec2f pos)
+void IMovable::SetPosition(Vec2d pos)
 {
-	position_ = pos.ToSDLPoint();
+	position_ = pos;
 	// UpdateCollisionBox();
 }
 
 void IMovable::SetPosition(SDL_Point p)
 {
-	position_ = p;
+	position_.x = static_cast<double>(p.x);
+	position_.y = static_cast<double>(p.y);
 	// UpdateCollisionBox();
 }
 
-void IMovable::SetVelocity(float velX, float velY)
+void IMovable::SetVelocity(double velX, double velY)
 {
 	velocity_.x = velX;
 	velocity_.y = velY;
 }
 
-void IMovable::SetVelocity(Vec2f v)
+void IMovable::SetVelocity(Vec2d v)
 {
 	velocity_ = v;
 }
 
-void IMovable::AddVelocity(Vec2f v)
+void IMovable::AddVelocity(Vec2d v)
 {
 	velocity_ = velocity_ + v;
 }
 
-void IMovable::AddVelocity(float velX, float velY)
+void IMovable::AddVelocity(double velX, double velY)
 {
 	velocity_.x += velX;
 	velocity_.y += velY;
@@ -72,14 +73,14 @@ void IMovable::MulVelocity(double m)
 	velocity_ *= m;
 }
 
-void IMovable::SetAcceleration(Vec2f acceleration)
+void IMovable::SetAcceleration(Vec2d acceleration)
 {
 	accel_ = acceleration;
 }
 
-void IMovable::Update(GameEngine *game, float dt)
+void IMovable::Update(GameEngine *game, double dt)
 {
-	Vec2f cappedVel = velocity_;
+	Vec2d cappedVel = velocity_;
 	if (velocity_.Length() > maxSpeed_)
 	{
 		cappedVel.Truncate(maxSpeed_);
@@ -93,10 +94,10 @@ void IMovable::Update(GameEngine *game, float dt)
 	if (!freeBird_)
 	{
 		SDL_Rect rect = GetRect();
-		position_.x = std::max(position_.x, 0);
-		position_.y = std::max(position_.y, 0);
-		position_.x = std::min(position_.x, game->GetWindowWidth() - rect.w);
-		position_.y = std::min(position_.y, game->GetWindowHeight() - rect.h);
+		position_.x = std::max(position_.x, 0.0);
+		position_.y = std::max(position_.y, 0.0);
+		position_.x = std::min(position_.x, static_cast<double>(game->GetWindowWidth() - rect.w));
+		position_.y = std::min(position_.y, static_cast<double>(game->GetWindowHeight() - rect.h));
 	}
 }
 
@@ -104,10 +105,10 @@ void IMovable::Update(GameEngine *game, float dt)
 void IMovable::UpdatePosition(float dt, Match* m) 
 {
 	//Update Velocity
-	Vec2f dAccel = accel_ * dt;
+	Vec2d dAccel = accel_ * dt;
 	velocity_ = velocity_ + dAccel;
 
-	Vec2f dVelocity = velocity_ * dt;
+	Vec2d dVelocity = velocity_ * dt;
 		
 	//escape recursivity
 	if ( dVelocity.length() <= 1){

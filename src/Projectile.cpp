@@ -8,10 +8,9 @@ Projectile::Projectile(GameEngine *, Player *pl)
 	position_ = pl->GetPosition();
 	position_.x += (pl->GetRect().w / 2);
 	position_.y += -2;
-	velocity_ = {.0f, -.5f};
+	size_ = {6, 20};
+	velocity_ = {.0, -.5};
 	maxSpeed_ = 0.5;
-	width_ = 6;
-	height_ = 20;
 	freeBird_ = true;
 }
 
@@ -25,7 +24,7 @@ void Projectile::Draw(GameEngine *game)
 	SDL_RenderFillRect(rend, &coords);
 }
 
-void Projectile::Update(GameEngine *game, float dt)
+void Projectile::Update(GameEngine *game,double dt)
 {
 	IMovable::Update(game, dt);
 	const SDL_Rect windowRect = {0, 0, game->GetWindowWidth(), game->GetWindowHeight()};
