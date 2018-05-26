@@ -18,6 +18,7 @@ class IMovable : public virtual IEntity
 	void SetPosition(double x, double y);
 	void SetPosition(Vec2d pos);
 	void SetPosition(SDL_Point p);
+	void CenterOn(Vec2d pos);
 
 	// Velocity related
 	Vec2d GetVelocity();

@@ -3,19 +3,25 @@
 
 #include <vector>
 #include "Enemy.h"
+#include "Trajectory.h"
 
-// circle wave
+class Trajectory;
+
 class EnemyWave
 {
   public:
-	EnemyWave(int size);
+	EnemyWave(unsigned int size);
 	void Update(GameEngine *game, double dt);
-	void Draw(GameEngine *game);
 
-  protected:
+	double *GetAdv();
+	unsigned int GetSize();
+	std::vector<Enemy *> GetEnemies();
+
+  private:
+	unsigned int size_;
 	std::vector<Enemy *> enemies_;
-	Vec2d center_;
-	float radius_;
+	Trajectory *traj_;
+	double *advancement_;
 };
 
 #endif

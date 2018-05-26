@@ -1,45 +1,45 @@
 #include "EnemyWave.h"
 #include <Vec2.h>
 
-EnemyWave::EnemyWave(int size) {
-
-	// (x−a)2 + (y−b)2 = r2
-
-	float circlediv = 360/size;
-	center_ = {640/2, 480/2};
-	radius_ = 100;
-
-	for(int i = 0; i < size; i++)
+EnemyWave::EnemyWave(unsigned int size) {
+	std::function<Vec2d(double)> linearBidon = [](double d) 
 	{
-		// angle
-		Rectdouble r;
-		double angle = circlediv*i;
-		Vec2d v = {radius_, 0};
-		v.Rotate(angle);
-		Enemy *e = new Enemy(center_ + v);
-		r = e->GetRectDouble();
-		e->SetPosition(r.x - (r.w/2), r.y - (r.h/2) );
+		Vec2d v = {840*d - 100, 480/2};
+		return v;
+	};
+
+	size_ = size;
+	advancement_ = new double[size];
+	traj_ = new Trajectory(linearBidon);
+
+	for(size_t i = 0; i < size_; i++)
+	{
+		Enemy *e = new Enemy(0, 0);
+		advancement_[i] = 0.07*i;
+		Vec2d start = traj_->GetPoint(advancement_[i]);
+		e->CenterOn(start);
 		enemies_.push_back(e);
 	}
 }
 
-void EnemyWave::Update(GameEngine *, double dt) {
-	for(auto& e : enemies_)
+void EnemyWave::Update(GameEngine *game, double dt) {
+	traj_->Advance(this, dt);
+	for(size_t i = 0; i < size_; i++)
 	{
-		Rectdouble r = e->GetRectDouble();
-		Vec2d p = {r.x, r.y};
-		p -= center_;
-		p = {p.x + (r.w/2), p.y + (r.h/2)};
-		p.Rotate( dt / 50 ); // 1 deg every 50ms
-		p += center_;
-		p = {p.x - (r.w/2), p.y - (r.h/2)};
-		e->SetPosition(p);
+		Vec2d p = traj_->GetPoint(advancement_[i]);
+		enemies_[i]->CenterOn(p);
+		enemies_[i]->Update(game, dt);
 	}
 }
 
-void EnemyWave::Draw(GameEngine *game) {
-	for(auto& e : enemies_)
-	{
-		e->Draw(game);
-	}
+double *EnemyWave::GetAdv() {
+	return advancement_;
 }
+
+unsigned int EnemyWave::GetSize() {
+	return size_;
+}
+
+std::vector<Enemy*> EnemyWave::GetEnemies() {
+	 return enemies_;
+ }

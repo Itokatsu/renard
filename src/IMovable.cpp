@@ -46,6 +46,12 @@ void IMovable::SetPosition(SDL_Point p)
 	// UpdateCollisionBox();
 }
 
+void IMovable::CenterOn(Vec2d pos)
+{
+	position_.x = pos.x - (size_.x / 2);
+	position_.y = pos.y - (size_.y / 2);
+}
+
 void IMovable::SetVelocity(double velX, double velY)
 {
 	velocity_.x = velX;

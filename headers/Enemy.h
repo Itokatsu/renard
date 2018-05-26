@@ -8,6 +8,7 @@
 class Enemy : public IMovable
 {
   public:
+	Enemy();
 	Enemy(double posX, double posY);
 	Enemy(Vec2d pos);
 

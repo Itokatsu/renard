@@ -18,14 +18,11 @@ void Screen_Sprite::Init(GameEngine *game)
 	thePlayer_ = new Player(game->GetWindowWidth() / 2 - 20, game->GetWindowHeight() - 100);
 	thePlayer_->SetSprite(game, "sprite.png");
 
-	/*for (int i = 0; i < 5; i++)
-	{
-		entities_.push_back(new Enemy((1 + i) * 100, 150));
-	}*/
-	
 	wave_ = new EnemyWave(6);
-
+	std::vector<Enemy*> waveEntities = wave_->GetEnemies();
 	entities_.push_back(thePlayer_);
+	// merge both vectores
+	entities_.insert(std::end(entities_), std::begin(waveEntities), std::end(waveEntities));
 
 	std::cout << "[Sprite Screen Start]" << std::endl;
 }
@@ -141,12 +138,12 @@ void Screen_Sprite::HandleEvents(GameEngine *game)
 
 void Screen_Sprite::Update(GameEngine *game, double dt)
 {
+	wave_->Update(game, dt);
 	for (auto &e : entities_)
 	{
 		if (!e->IsDead())
 			e->Update(game, dt);
 	}
-	wave_->Update(game, dt);
 }
 
 void Screen_Sprite::Draw(GameEngine *game)
@@ -156,7 +153,6 @@ void Screen_Sprite::Draw(GameEngine *game)
 		if (!e->IsDead())
 			e->Draw(game);
 	}
-	wave_->Draw(game);
 }
 
 Screen_Sprite *Screen_Sprite::Instance()
