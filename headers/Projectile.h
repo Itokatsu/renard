@@ -5,7 +5,7 @@
 #include "Vec2.h"
 #include "GameEngine.h"
 #include "Sprite.h"
-#include "Player.h"
+#include "IMovable.h"
 #include "IEntity.h"
 
 class Player;
@@ -13,16 +13,13 @@ class Player;
 class Projectile : public IMovable
 {
   public:
-	Projectile(GameEngine *game, Player *pl);
+	Projectile(GameEngine *game, IEntity *ent);
 
 	void Draw(GameEngine *game);
 	void Update(GameEngine *game, float dt);
 
-	// Sprite *GetSprite();
-
   private:
-    Player *owner_;
-	// Sprite *mySprite_;
+    IEntity *owner_;
 };
 
 #endif

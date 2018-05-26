@@ -1,20 +1,31 @@
 #include "Projectile.h"
 #include <iostream>
 #include <algorithm>
+#include "Player.h"
+#include "Enemy.h"
 
-Projectile::Projectile(GameEngine *, Player *pl) : IMovable()
+Projectile::Projectile(GameEngine *, IEntity *ent) : IMovable()
 {
-	// SDL_Texture *tex = game->GetDrawEngine()->GetRessource("sprite.png");
-	// mySprite_ = new Sprite(tex, 96 / 3, 128 / 4, 3, 100);
-	owner_ = pl;
-	position_ = pl->GetPosition();
-	position_.x += (pl->GetRect().w / 2);
+	owner_ = ent;
+	position_ = ent->GetPosition();
+	position_.x += (ent->GetRect().w / 2);
 	position_.y += -2;
 	velocity_ = {.0f, -.5f};
 	maxSpeed_ = 0.5;
 	width_ = 6;
 	height_ = 20;
 	freeBird_ = true;
+	
+	// If shot by Player
+	if (dynamic_cast<Player*>(ent))
+	{
+		MulVelocity(1.);
+	}
+	// If shot by enemies
+	else if (dynamic_cast<Enemy*>(ent))
+	{
+		MulVelocity(-1.);
+	}
 }
 
 void Projectile::Draw(GameEngine *game)
@@ -38,8 +49,3 @@ void Projectile::Update(GameEngine *game, float dt)
 		alive_ = false;
 	}
 }
-
-// Sprite *Projectile::GetSprite()
-// {
-// 	return mySprite_;
-// }
