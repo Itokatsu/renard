@@ -4,18 +4,20 @@
 #include "SDL.h"
 #include "GameEngine.h"
 #include "IMovable.h"
-#include "Player.h"
+#include "IEntity.h"
+
+class Player;
 
 class Projectile : public IMovable
 {
   public:
-	Projectile(GameEngine *game, Player *pl);
+	Projectile(GameEngine *game, IEntity *ent);
 
 	void Draw(GameEngine *game);
 	void Update(GameEngine *game, double dt);
 
   private:
-    Player *owner_;
+    IEntity *owner_;
 };
 
 #endif

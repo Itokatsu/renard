@@ -4,7 +4,7 @@
 #include "GameEngine.h"
 #include "IMovable.h"
 
-/* Enenmi turret -> not IMovable ! */
+/* Enemy turret -> not IMovable ! */
 class Enemy : public IMovable
 {
   public:
