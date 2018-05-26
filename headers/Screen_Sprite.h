@@ -3,9 +3,8 @@
 
 #include "IGameScreen.h"
 #include "IEntity.h"
-#include "Enemy.h"
 #include "Player.h"
-#include "Projectile.h"
+
 class Screen_Sprite : public IGameScreen
 {
 

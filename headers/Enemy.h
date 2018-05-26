@@ -1,12 +1,10 @@
 #ifndef DEF_ENEMY
 #define DEF_ENEMY
 
-#include "SDL.h"
-#include "Vec2.h"
-#include "IMovable.h"
 #include "GameEngine.h"
+#include "IMovable.h"
 
-/* Enenmi turret -> not IMovable ! */
+/* Enemy turret -> not IMovable ! */
 class Enemy : public IMovable
 {
   public:

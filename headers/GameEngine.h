@@ -22,8 +22,7 @@ class GameEngine
 
 	void HandleEvents();
 	void Update();
-	void 
-	Draw();
+	void Draw();
 
 	// Exits the program
 	void Quit();

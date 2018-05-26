@@ -2,9 +2,7 @@
 #define DEF_PROJECTILE
 
 #include "SDL.h"
-#include "Vec2.h"
 #include "GameEngine.h"
-#include "Sprite.h"
 #include "IMovable.h"
 #include "IEntity.h"
 
