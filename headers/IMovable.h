@@ -6,7 +6,7 @@
 #include "IEntity.h"
 #include "GameEngine.h"
 
-class IMovable : public IEntity
+class IMovable : public virtual IEntity
 {
   public:
 	IMovable();

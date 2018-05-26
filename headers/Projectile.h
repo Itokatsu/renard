@@ -2,13 +2,9 @@
 #define DEF_PROJECTILE
 
 #include "SDL.h"
-#include "Vec2.h"
 #include "GameEngine.h"
-#include "Sprite.h"
 #include "Player.h"
-#include "IEntity.h"
-
-class Player;
+#include "IMovable.h"
 
 class Projectile : public IMovable
 {
@@ -18,11 +14,8 @@ class Projectile : public IMovable
 	void Draw(GameEngine *game);
 	void Update(GameEngine *game, float dt);
 
-	// Sprite *GetSprite();
-
   private:
     Player *owner_;
-	// Sprite *mySprite_;
 };
 
 #endif

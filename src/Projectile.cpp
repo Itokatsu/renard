@@ -1,8 +1,6 @@
 #include "Projectile.h"
-#include <iostream>
-#include <algorithm>
 
-Projectile::Projectile(GameEngine *, Player *pl) : IMovable()
+Projectile::Projectile(GameEngine *, Player *pl)
 {
 	// SDL_Texture *tex = game->GetDrawEngine()->GetRessource("sprite.png");
 	// mySprite_ = new Sprite(tex, 96 / 3, 128 / 4, 3, 100);

@@ -25,6 +25,7 @@ Vec2f IMovable::GetAcceleration()
 //=============================================
 //==  ALWAYS USE THIS FOR CHANGING POSITION_ ===
 //=============================================
+
 void IMovable::SetPosition(int x, int y)
 {
 	position_.x = x;
@@ -44,15 +45,15 @@ void IMovable::SetPosition(SDL_Point p)
 	// UpdateCollisionBox();
 }
 
-void IMovable::SetVelocity(Vec2f v)
-{
-	velocity_ = v;
-}
-
 void IMovable::SetVelocity(float velX, float velY)
 {
 	velocity_.x = velX;
 	velocity_.y = velY;
+}
+
+void IMovable::SetVelocity(Vec2f v)
+{
+	velocity_ = v;
 }
 
 void IMovable::AddVelocity(Vec2f v)
