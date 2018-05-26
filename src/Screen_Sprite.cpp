@@ -18,7 +18,7 @@ void Screen_Sprite::Init(GameEngine *game)
 	thePlayer_ = new Player(game->GetWindowWidth() / 2 - 20, game->GetWindowHeight() - 100);
 	thePlayer_->SetSprite(game, "sprite.png");
 
-	wave_ = new EnemyWave(6);
+	wave_ = new EnemyWave(9);
 	std::vector<Enemy*> waveEntities = wave_->GetEnemies();
 	entities_.push_back(thePlayer_);
 	// merge both vectores
