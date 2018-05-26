@@ -3,8 +3,8 @@
 
 #include "SDL.h"
 #include "GameEngine.h"
-#include "Player.h"
 #include "IMovable.h"
+#include "Player.h"
 
 class Projectile : public IMovable
 {

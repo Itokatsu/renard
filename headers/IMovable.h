@@ -1,11 +1,9 @@
 #ifndef DEF_IMOVABLE
 #define DEF_IMOVABLE
 
-#include "SDL.h"
-#include "Vec2.h"
-#include "IEntity.h"
 #include "GameEngine.h"
-
+#include "IEntity.h"
+#include "Vec2.h"
 class IMovable : public virtual IEntity
 {
   public:

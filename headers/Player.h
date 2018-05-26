@@ -1,10 +1,9 @@
 #ifndef DEF_PLAYER
 #define DEF_PLAYER
 
-#include "SDL.h"
+#include "GameEngine.h"
 #include "IMovable.h"
 #include "IHasSprite.h"
-#include "GameEngine.h"
 
 class Player : public IHasSprite, public IMovable
 {

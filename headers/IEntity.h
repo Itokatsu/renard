@@ -1,8 +1,6 @@
 #ifndef DEF_IENTITY
 #define DEF_IENTITY
 
-#include "SDL.h"
-#include "Vec2.h"
 #include "GameEngine.h"
 
 class IEntity

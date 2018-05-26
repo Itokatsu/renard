@@ -1,10 +1,9 @@
 #ifndef DEF_IHASSPRITE
 #define DEF_IHASSPRITE
 
-#include "SDL.h"
+#include "GameEngine.h"
 #include "IEntity.h"
 #include "Sprite.h"
-#include "GameEngine.h"
 
 class IHasSprite : public virtual IEntity
 {
