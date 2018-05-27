@@ -15,6 +15,7 @@ class Trajectory
 	void Advance(EnemyWave *wave, double dt);
 
 	Vec2d GetPoint(double advancement);
+	Vec2d GetDirection(double prevAdvancement, double advancement);
 
   private:
 	double speedCoeff_;

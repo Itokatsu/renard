@@ -19,3 +19,14 @@ void Trajectory::Advance(EnemyWave *wave, double dt) {
 Vec2d Trajectory::GetPoint(double advancement) {
 	return func_(advancement);
 }
+
+Vec2d Trajectory::GetDirection(double prevAdvancement, double advancement) {
+	Vec2d direction, prevPoint, point;
+	prevPoint =  func_(prevAdvancement);
+	point = func_(advancement);
+	
+	direction.x = point.x - prevPoint.x;
+	direction.y = point.y - prevPoint.y;
+
+	return direction;
+}
