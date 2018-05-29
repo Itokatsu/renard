@@ -14,12 +14,12 @@ Screen_Sprite::Screen_Sprite() {}
 void Screen_Sprite::Init(GameEngine *game)
 {
 	game->GetDrawEngine()->LoadSprite("media/img/sprite.png", 96 / 3, 128 / 4, 3);
-	
+
 	thePlayer_ = new Player(game->GetWindowWidth() / 2 - 20, game->GetWindowHeight() - 100);
 	thePlayer_->SetSprite(game, "sprite.png");
 
 	wave_ = new EnemyWave(9);
-	std::vector<Enemy*> waveEntities = wave_->GetEnemies();
+	std::vector<Enemy *> waveEntities = wave_->GetEnemies();
 	entities_.push_back(thePlayer_);
 	// merge both vectores
 	entities_.insert(std::end(entities_), std::begin(waveEntities), std::end(waveEntities));
@@ -103,9 +103,9 @@ void Screen_Sprite::HandleEvents(GameEngine *game)
 				case SDLK_LEFT:
 					thePlayer_->SetDirection(Direction::GAUCHE);
 					thePlayer_->AddVelocity({-1, 0});
-					break;				
+					break;
 				case SDLK_x:
-					thePlayer_->Shoot(game, &entities_);
+					thePlayer_->SetAutofire(true);
 					break;
 				}
 			}
@@ -130,6 +130,10 @@ void Screen_Sprite::HandleEvents(GameEngine *game)
 				case SDLK_LEFT:
 					thePlayer_->AddVelocity({1, 0});
 					break;
+
+				case SDLK_x:
+					thePlayer_->SetAutofire(false);
+					break;
 				}
 			}
 		}
@@ -138,11 +142,36 @@ void Screen_Sprite::HandleEvents(GameEngine *game)
 
 void Screen_Sprite::Update(GameEngine *game, double dt)
 {
+	if (thePlayer_->AutoFiring())
+	{
+		thePlayer_->Shoot(&entities_);
+	}
 	wave_->Update(game, dt);
 	for (auto &e : entities_)
 	{
 		if (!e->IsDead())
 			e->Update(game, dt);
+	}
+
+	// collisions
+	for (auto &e1 : entities_)
+	{
+		IHasCollision *c1 = dynamic_cast<IHasCollision *>(e1);
+		if (c1 && !c1->IsDead())
+		{
+			for (auto &e2 : entities_)
+			{
+				IHasCollision *c2 = dynamic_cast<IHasCollision *>(e2);
+				if (c2 && !c2->IsDead() && c1 != c2)
+				{
+					SDL_Rect intersect;
+					if (SDL_IntersectRect(c1->GetHitBox(), c2->GetHitBox(), &intersect)) {
+						std::cout << "collision occured " << std::endl;
+						c1->CollidesWith(c2, &intersect);
+					}
+				}
+			}
+		}
 	}
 }
 

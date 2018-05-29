@@ -3,9 +3,10 @@
 
 #include "GameEngine.h"
 #include "IMovable.h"
+#include "IHasCollision.h"
 
 /* Enemy turret -> not IMovable ! */
-class Enemy : public IMovable
+class Enemy : public IMovable, public IHasCollision
 {
   public:
 	Enemy();
@@ -16,6 +17,8 @@ class Enemy : public IMovable
 	void Update(GameEngine *game, double dt);
 
 	SDL_Color GetColor();
+
+	void CollidesWith(IHasCollision *c, SDL_Rect *collisionBox);
 
   private:
 	int health_;

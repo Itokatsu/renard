@@ -4,17 +4,19 @@
 #include "SDL.h"
 #include "GameEngine.h"
 #include "IMovable.h"
-#include "IEntity.h"
+#include "IHasCollision.h"
 
 class Player;
 
-class Projectile : public IMovable
+class Projectile : public IMovable, public IHasCollision
 {
   public:
-	Projectile(GameEngine *game, IEntity *ent);
+	Projectile(IEntity *ent);
 
 	void Draw(GameEngine *game);
 	void Update(GameEngine *game, double dt);
+
+	void CollidesWith(IHasCollision *c, SDL_Rect *collisionBox);
 
   private:
     IEntity *owner_;

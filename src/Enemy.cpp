@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "Projectile.h"
 
 Enemy::Enemy() : IMovable() {
 	maxSpeed_ = 0.2;
@@ -46,13 +47,26 @@ void Enemy::Draw(GameEngine *game)
 void Enemy::Update(GameEngine *game, double dt)
 {
 	IMovable::Update(game, dt);
-	if (health_ <= 0 || ttl_ <= 0)
+	UpdateHitBox();
+	if (health_ <= 0) // || ttl_ <= 0)
 		alive_ = false;
-	else
-		ttl_ -= dt;
+	/*else
+		ttl_ -= dt;*/
 }
 
 SDL_Color Enemy::GetColor()
 {
 	return color_;
+}
+
+void Enemy::CollidesWith(IHasCollision *c, SDL_Rect *collisionBox)
+{
+	Projectile *proj = dynamic_cast<Projectile*>(c);
+	if (proj)
+	{
+		health_ -= 1;
+		size_ = size_ * 0.8;
+
+		return;
+	}
 }

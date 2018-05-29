@@ -4,12 +4,12 @@
 #include "Player.h"
 #include "Enemy.h"
 
-Projectile::Projectile(GameEngine *, IEntity *ent) : IMovable()
+Projectile::Projectile(IEntity *ent) : IMovable()
 {
 	owner_ = ent;
 	position_ = ent->GetPosition();
 	position_.x += (ent->GetRect().w / 2);
-	position_.y += -2;
+	position_.y += - (ent->GetRect().h / 2);
 	size_ = {6, 20};
 	velocity_ = {.0, -.5};
 	maxSpeed_ = 0.5;
@@ -37,14 +37,33 @@ void Projectile::Draw(GameEngine *game)
 	SDL_RenderFillRect(rend, &coords);
 }
 
-void Projectile::Update(GameEngine *game,double dt)
+void Projectile::Update(GameEngine *game, double dt)
 {
 	IMovable::Update(game, dt);
 	const SDL_Rect windowRect = {0, 0, game->GetWindowWidth(), game->GetWindowHeight()};
 	const SDL_Rect projRect = GetRect();
-	SDL_Rect intersection;
 	// false if no intersection
-	if (!SDL_IntersectRect(&projRect, &windowRect, &intersection)) {
+	if (!SDL_HasIntersection(&projRect, &windowRect)) {
 		alive_ = false;
 	}
+	UpdateHitBox();
+}
+
+void Projectile::CollidesWith(IHasCollision *c, SDL_Rect *collisionBox) {
+	Enemy *e = dynamic_cast<Enemy*>(c);
+	if (e)
+	{
+		std::cout << "A Projectile hit an enemy." << std::endl;
+		alive_ = false;
+		return;
+	}
+
+	Player *pl = dynamic_cast<Player*>(c);
+	if (pl)
+	{
+		std::cout << "A Projectile hit the player." << std::endl;
+		alive_ = false;
+		return;
+	}
+
 }
