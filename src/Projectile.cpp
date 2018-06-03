@@ -9,7 +9,7 @@ Projectile::Projectile(IEntity *ent) : IMovable()
 	owner_ = ent;
 	position_ = ent->GetPosition();
 	position_.x += (ent->GetRect().w / 2);
-	position_.y += - (ent->GetRect().h / 2);
+	position_.y -= (ent->GetRect().h / 2);
 	size_ = {6, 20};
 	velocity_ = {.0, -.5};
 	maxSpeed_ = 0.5;
@@ -53,16 +53,16 @@ void Projectile::CollidesWith(IHasCollision *c, SDL_Rect *collisionBox) {
 	Enemy *e = dynamic_cast<Enemy*>(c);
 	if (e)
 	{
-		std::cout << "A Projectile hit an enemy." << std::endl;
 		alive_ = false;
+		e->CollidesWith(this, collisionBox);
 		return;
 	}
 
 	Player *pl = dynamic_cast<Player*>(c);
 	if (pl)
 	{
-		std::cout << "A Projectile hit the player." << std::endl;
 		alive_ = false;
+		pl->CollidesWith(this, collisionBox);
 		return;
 	}
 

@@ -1,7 +1,8 @@
 #include "Enemy.h"
 #include "Projectile.h"
 
-Enemy::Enemy() : IMovable() {
+Enemy::Enemy() : IMovable()
+{
 	maxSpeed_ = 0.2;
 	health_ = 3;
 	size_ = {32, 32};
@@ -61,10 +62,10 @@ SDL_Color Enemy::GetColor()
 
 void Enemy::CollidesWith(IHasCollision *c, SDL_Rect *collisionBox)
 {
-	Projectile *proj = dynamic_cast<Projectile*>(c);
+	Projectile *proj = dynamic_cast<Projectile *>(c);
 	if (proj)
 	{
-		health_ -= 1;
+		health_--;
 		size_ = size_ * 0.8;
 
 		return;

@@ -1,6 +1,6 @@
 #include "GameEngine.h"
 #include "IGameScreen.h"
-#include "Screen_Sprite.h"
+#include "Screen_Menu.h"
 
 #include <iostream>
 
@@ -37,7 +37,7 @@ bool GameEngine::Init(int width, int height)
 	if (success)
 	{
 		// start intro
-		screens_.push_back(Screen_Sprite::Instance());
+		screens_.push_back(Screen_Menu::Instance());
 		// init intro
 		screens_.back()->Init(this);
 

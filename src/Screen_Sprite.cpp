@@ -29,7 +29,7 @@ void Screen_Sprite::Init(GameEngine *game)
 
 void Screen_Sprite::Cleanup()
 {
-	// entities_.clear();
+	entities_.clear();
 	std::cout << "[Sprite Screen Quit]" << std::endl;
 }
 
@@ -61,6 +61,7 @@ void Screen_Sprite::Unpause()
 	{
 		thePlayer_->AddVelocity({baseSpd, 0.});
 	}
+	thePlayer_->SetAutofire( keyStates[SDL_SCANCODE_X]);
 }
 
 void Screen_Sprite::HandleEvents(GameEngine *game)

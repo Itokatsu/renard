@@ -55,7 +55,7 @@ void Screen_Pause::Draw(GameEngine *game)
 	SDL_Renderer *rend = game->GetGraphicEngine()->GetRenderer();
 	SDL_SetRenderDrawColor(rend, 0x00, 0x00, 0x00, 0xB7);
 	SDL_Rect filter = {0, 0, 640, 480};
-	SDL_RenderFillRect(game->GetGraphicEngine()->GetRenderer(), &filter);
+	SDL_RenderFillRect(rend, &filter);
 }
 
 Screen_Pause *Screen_Pause::Instance()

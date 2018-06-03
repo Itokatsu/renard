@@ -86,15 +86,24 @@ void IMovable::SetAcceleration(Vec2d acceleration)
 
 void IMovable::Update(GameEngine *game, double dt)
 {
-	Vec2d cappedVel = velocity_;
-	if (velocity_.Length() > maxSpeed_)
-	{
-		cappedVel.Truncate(maxSpeed_);
+	// Update Velocity
+	if (accel_.x != 0 || accel_.y != 0) {
+		Vec2d dAccel = accel_ * dt;
+		velocity_ = velocity_ + dAccel;
 	}
-	
-	// SetPosition (cappedVel * dt + position_)
-	position_.x += (cappedVel.x * dt);
-	position_.y += (cappedVel.y * dt);
+
+	// Update Position
+	if (velocity_.x != 0 || velocity_.y != 0) {
+		Vec2d dVelocity = velocity_;
+		if (velocity_.Length() > maxSpeed_)
+		{
+			dVelocity.Truncate(maxSpeed_);
+		}
+
+		// Update Position
+		dVelocity *= dt;
+		position_ += dVelocity;
+	}
 
 	// Check with window boundaries.
 	if (!freeBird_)

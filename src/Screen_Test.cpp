@@ -10,11 +10,8 @@ Screen_Test::Screen_Test()
 
 void Screen_Test::Init(GameEngine *game)
 {
-	// texture_title = game->GetDrawEngine()->CreateTexture("../media/img/logoa2balles.png");
-	SDL_Color textColor = {0xBB, 0xBB, 0xBB, 0xFF};
-	textureText_ = game->GetDrawEngine()->LoadText("TEST", textColor);
+	// SDL_Color textColor = {0xBB, 0xBB, 0xBB, 0xFF};
 	texturePng_ = game->GetDrawEngine()->LoadImage("media/img/kyo.png");
-	bgMusic_ = game->GetSoundEngine()->LoadMusic("media/sound/Wolf.mp3");
 	std::cout << "[TEST Screen Start]" << std::endl;
 }
 
@@ -49,25 +46,7 @@ void Screen_Test::HandleEvents(GameEngine *game)
 				// ESCAPE is pressed
 				if (e.key.keysym.sym == SDLK_ESCAPE)
 				{
-					game->Quit();
-				}
-				if (e.key.keysym.sym == SDLK_SPACE)
-				{
-					if (Mix_PlayingMusic() == 0)
-					{
-						Mix_PlayMusic(bgMusic_, -1);
-					}
-					else
-					{
-						if (Mix_PausedMusic() == 1)
-						{
-							Mix_ResumeMusic();
-						}
-						else
-						{
-							Mix_PauseMusic();
-						}
-					}
+					game->PopScreen();
 				}
 			}
 		}
@@ -80,24 +59,6 @@ void Screen_Test::Update(GameEngine *, double)
 
 void Screen_Test::Draw(GameEngine *game)
 {
-	SDL_Renderer *rend = game->GetGraphicEngine()->GetRenderer();
-	SDL_SetRenderDrawColor(rend, 0x25, 0x25, 0x30, 0xFF);
-	SDL_RenderClear(rend);
-
-	SDL_Rect fillRect = {80, 30, 640 - 160, 30};
-	SDL_SetRenderDrawColor(rend, 0xFF, 0x55, 0x55, 0xFF);
-	SDL_RenderFillRect(rend, &fillRect);
-
-	for (int x = 0; x <= 640; x += 80)
-	{
-		for (int y = 0; y <= 480; y += 30)
-		{
-			SDL_Rect area = {x, y, 70, 28};
-			SDL_RenderCopy(rend, textureText_, NULL, &area);
-		}
-	}
-	SDL_Rect png_area = {135, 105, 370, 300};
-	SDL_RenderCopy(rend, texturePng_, NULL, &png_area);
 }
 
 Screen_Test *Screen_Test::Instance()
