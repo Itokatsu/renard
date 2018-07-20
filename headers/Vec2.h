@@ -4,6 +4,7 @@
 #include <cmath>
 #include "SDL.h"
 
+
 template <class T>
 class Vec2
 {
@@ -89,6 +90,11 @@ class Vec2
 	{
 		this->x = x;
 		this->y = y;
+	}
+
+	bool IsNull()
+	{
+		return (x == 0 && y == 0);
 	}
 
 	void Rotate(double deg)

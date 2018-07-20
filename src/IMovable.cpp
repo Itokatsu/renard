@@ -30,20 +30,17 @@ void IMovable::SetPosition(double x, double y)
 {
 	position_.x = x;
 	position_.y = y;
-	// UpdateCollisionBox();
 }
 
 void IMovable::SetPosition(Vec2d pos)
 {
 	position_ = pos;
-	// UpdateCollisionBox();
 }
 
 void IMovable::SetPosition(SDL_Point p)
 {
 	position_.x = static_cast<double>(p.x);
 	position_.y = static_cast<double>(p.y);
-	// UpdateCollisionBox();
 }
 
 void IMovable::CenterOn(Vec2d pos)
@@ -87,13 +84,14 @@ void IMovable::SetAcceleration(Vec2d acceleration)
 void IMovable::Update(GameEngine *game, double dt)
 {
 	// Update Velocity
-	if (accel_.x != 0 || accel_.y != 0) {
+	if (!accel_.IsNull()) 
+	{
 		Vec2d dAccel = accel_ * dt;
-		velocity_ = velocity_ + dAccel;
+		velocity_ += dAccel;
 	}
 
 	// Update Position
-	if (velocity_.x != 0 || velocity_.y != 0) {
+	if (!velocity_.IsNull()) {
 		Vec2d dVelocity = velocity_;
 		if (velocity_.Length() > maxSpeed_)
 		{

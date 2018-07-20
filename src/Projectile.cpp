@@ -7,10 +7,10 @@
 Projectile::Projectile(IEntity *ent) : IMovable()
 {
 	owner_ = ent;
+	size_ = {6, 20};
 	position_ = ent->GetPosition();
 	position_.x += (ent->GetRect().w / 2);
-	position_.y -= (ent->GetRect().h / 2);
-	size_ = {6, 20};
+	position_.y -= size_.y;
 	velocity_ = {.0, -.5};
 	maxSpeed_ = 0.5;
 	freeBird_ = true;

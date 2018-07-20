@@ -2,6 +2,8 @@
 #define DEF_SCREEN_TEST
 
 #include "IGameScreen.h"
+#include "Sprite.h"
+#include "Bullet.h"
 
 class Screen_Test : public IGameScreen
 {
@@ -23,9 +25,9 @@ class Screen_Test : public IGameScreen
 
   private:
 	static Screen_Test myTest_;
-	SDL_Texture *textureText_;
-	SDL_Texture *texturePng_;
-	Mix_Music *bgMusic_;
+	Sprite *bullet_;
+	Vec2d center_;
+	std::vector<Bullet*> projs_;
 };
 
 #endif

@@ -106,10 +106,11 @@ void Screen_Menu::HandleEvents(GameEngine *game)
 						game->PopScreen();
 						break;
 					}
+					break;
 
-				/*case SDLK_t:
+				case SDLK_t:
 					game->PushScreen(Screen_Test::Instance());
-					break;*/
+					break;
 				}
 			}
 		}

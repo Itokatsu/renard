@@ -75,6 +75,7 @@ SDL_Texture *DrawEngine::LoadImage(std::string imgPath)
 	}
 	else
 	{
+		SDL_SetColorKey( tempSurface, SDL_TRUE, SDL_MapRGB( tempSurface->format, 0x00, 0x00, 0x00 ) );
 		newTexture = SDL_CreateTextureFromSurface(renderer_, tempSurface);
 		if (newTexture == NULL)
 		{
